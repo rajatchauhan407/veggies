@@ -1,21 +1,9 @@
 <mat-sidenav-container>
-    <mat-sidenav  #sidenav role="navigation">
-       <p>Sidenav</p>
+    <mat-sidenav  #sidenav role="navigation" >
+       <install-sidenav (sidenavToggle)="onToggle()"></install-sidenav>
     </mat-sidenav>
     <mat-sidenav-content >
-        <mat-toolbar color="primary"> 
-            <div fxHide.gt-xs><button mat-icon-button (click)="onToggle()">
-                <mat-icon>menu</mat-icon>
-            </button></div>
-            <div><a routerLink="/">LoGo</a></div>
-            <div fxFlex fxLayout="row"  fxLayoutAlign="end none" fxHide.xs>
-                <ul fxLayout="row" fxLayoutGap="10px" class="navigation-items">
-                    <li><a routerLink="/signup">Sign Up</a></li>
-                    <li><a routerLink="/login">Sign In</a></li>
-                    <li><a routerLink="/learn">Veggies</a></li>
-                </ul>
-            </div>
-        </mat-toolbar>
+        <install-header (sidenavToggle)="onToggle()"></install-header>
         <main>
             <router-outlet></router-outlet>
         </main>

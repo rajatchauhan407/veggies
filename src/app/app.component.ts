@@ -10,6 +10,8 @@ export class AppComponent {
   title = 'a-fresh';
   @ViewChild('sidenav') sidenav:MatSidenav;
   onToggle(){
-   this.sidenav.opened=!this.sidenav.opened;
+    // console.log(this.sidenav);
+    this.sidenav.toggle();
+  // this.sidenav.opened=!this.sidenav.opened;
   }
 }
