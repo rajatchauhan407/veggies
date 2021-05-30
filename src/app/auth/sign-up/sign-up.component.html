@@ -1,0 +1,41 @@
+<section fxLayout="column" fxLayoutAlign="none center">
+    <form  
+    [formGroup]="signUp"
+    (ngSubmit)="onSubmit()"
+    fxLayout="column" 
+    fxLayoutAlign="none center">
+        <mat-form-field class="sign-up-form" appearance="standard">
+            <mat-label>Contact Number</mat-label>
+            <input 
+            matInput 
+            placeholder="" 
+            #pwInput
+            minlength="10"
+            maxlength="10"
+            formControlName="contact"
+            >
+            <mat-error *ngIf="signUp.get('contact').value=='' "> 
+                Please Enter Phone Number</mat-error>
+            <mat-error *ngIf="signUp.get('contact').errors!==null && signUp.get('contact').value!==''"> Please Enter Correct Phone Number</mat-error>
+            <!-- <mat-hint align="end">{{pwInput.value?.length}} /10</mat-hint> -->
+            <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+        <!-- <mat-form-field class="sign-up-form">
+            <mat-label>Enter Otp</mat-label>
+            <input 
+            matInput  
+            type="password" 
+            placeholder="Enter The OTP Received"
+            >
+        </mat-form-field> -->
+        <button 
+        type="submit" 
+        mat-raised-button color="primary"
+        [disabled]="!signUp.valid"
+        >Creat Account</button>
+    </form>
+    <div class="alternate-btn" fxLayout="row" fxLayoutAlign="none center">
+        <mat-icon color="primary">login</mat-icon>
+        <li [routerLink]="['/login']" routerLinkActive="router-link-active" >Already Have an account ? Click Login</li>
+    </div>
+</section>

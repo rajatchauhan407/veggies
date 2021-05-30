@@ -1,0 +1,17 @@
+mat-form-field{
+    width:300px;
+}
+button{
+    width:300px;
+}
+.alternate-btn{
+    width:300px;
+    margin-top:10px;
+}
+.alternate-btn p{
+    margin-bottom:0px !important;
+}
+li{
+   list-style:none;
+   cursor:pointer;
+}

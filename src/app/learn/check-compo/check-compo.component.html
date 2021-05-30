@@ -1,0 +1,22 @@
+<section>
+    <form [formGroup]="checkForm" (ngSubmit)="onSubmit()">
+        <div formArrayName="top">
+            
+                <h4>Select Your Toppings</h4>
+                <p *ngFor="let topping of toppings;let i=index">
+                    <mat-checkbox [value]="topping.value" (change)="onCheck($event)">{{topping.name}}</mat-checkbox></p>
+        </div>
+        <button 
+        mat-raised-button 
+        color="primary"
+        type="submit">Submit Your Choices</button>
+    </form>  
+<hr> 
+</section>
+<section>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" [formControl]="date">
+        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker color="accent"></mat-datepicker>
+    </mat-form-field>
+</section>
