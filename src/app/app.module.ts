@@ -7,10 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { LoginComponent } from './auth/login/login.component';
 import { FlexLayoutModule} from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckCompoComponent } from './learn/check-compo/check-compo.component';
 import { SidenavComponent } from './navigation/sidenav/sidenav.component';
 import { HeaderComponent } from './navigation/header/header.component';
+import { HomeComponent } from './home/home.component';
+import { PricesComponent } from './home/prices/prices.component';
+import { ChooseQuantityPopUpComponent } from './home/prices/choose-quantity-pop-up/choose-quantity-pop-up.component';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { HeaderComponent } from './navigation/header/header.component';
     LoginComponent,
     CheckCompoComponent,
     SidenavComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent,
+    PricesComponent,
+    ChooseQuantityPopUpComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +34,8 @@ import { HeaderComponent } from './navigation/header/header.component';
     MaterialModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

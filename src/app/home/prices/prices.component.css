@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Roboto&display=swap');
+body{
+    font-family: 'Oswald', sans-serif;
+font-family: 'Roboto', sans-serif;
+}
+h2{
+    margin: 0 !important;
+}
+.prices_container{
+    padding:10px;
+}
+.prices_container mat-card{
+    margin-bottom: 10px;
+}
+@media only screen and (max-width: 600px) {
+   section img{
+       margin-bottom: 5px;
+   }
+   .card-content{
+       margin-bottom:0;
+   }
+  }

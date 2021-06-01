@@ -1,0 +1,12 @@
+    <form>
+        <mat-form-field appearance="fill">
+            <mat-label>Favorite food</mat-label>
+            <mat-select [(ngModel)]="selectedQuantity" name="quant">
+              <mat-option *ngFor="let qnt of quantity" [value]="qnt">
+                {{qnt}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </form>
+    
+      

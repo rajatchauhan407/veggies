@@ -1,0 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'install-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+  public tab1:string="Prices Today";
+  public tab2:string="Your Orders"
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

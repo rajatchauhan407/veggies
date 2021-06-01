@@ -1,0 +1,23 @@
+<section 
+    class="prices_container"  
+    fxLayout="row wrap"  
+    fxLayoutAlign="space-between" fxLayoutAlign.gt-xs="space-between" fxLayoutGap.gt-xs="10px">
+    <mat-card tabIndex="0" fxFlex.xs="48" fxFlex.gt-xs="30" fxLayout="column" fxLayoutAlign="center">
+        <mat-card-title fxLayoutAlign="center">Tomatoes</mat-card-title>
+        <img mat-card-image [src]="image" >
+        <mat-card-content fxLayoutAlign="space-between none" class="card-content">
+            <div><span><h2><i class="fa fa-inr"></i>40</h2></span></div>
+            <div><i class="fa fa-dot-circle-o" style="font-size:32px;color:green"></i></div>
+        </mat-card-content>
+        <mat-card-actions fxlayout="row">
+
+            <button mat-raised-button  fxFlex="100" type="submit" color="accent">
+                Add to bucket
+            </button>
+        </mat-card-actions>
+    </mat-card>
+    
+</section>
+<section>
+    <install-choose-quantity-pop-up></install-choose-quantity-pop-up>
+</section>
