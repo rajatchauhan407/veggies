@@ -33,6 +33,9 @@ export class AuthService{
               {
               return false;
               }
-      }  
+      } 
+      checkGit(){
+        console.log('checkGit');
+      } 
     
 }
