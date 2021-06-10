@@ -15,9 +15,9 @@ export class CheckCompoComponent implements OnInit {
   checkForm:FormGroup;
   ngOnInit(): void {
     let date= new Date();
-    console.log(date);
-    console.log(date)
-    console.log(date.getFullYear() +'   '+ date.getHours() +' : ' + date.getMinutes());
+    // console.log(date);
+    // console.log(date)
+    // console.log(date.getFullYear() +'   '+ date.getHours() +' : ' + date.getMinutes());
     this.checkForm=new FormGroup({
       'top':new FormArray([])
     })
@@ -40,6 +40,53 @@ export class CheckCompoComponent implements OnInit {
           i++;
       })
     }
-  
   }
-}
+  setTimer(duration){
+    const promise= new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        resolve('Done!')
+      },2000);
+    });
+    return promise;
+  }
+  getPosition(){
+    const promise = new Promise((resolve,reject)=>{
+      navigator.geolocation.getCurrentPosition(success=>{
+        resolve(success);
+      }, error=>{
+        reject(error);
+      })
+    });
+    return promise;
+  }
+  async getLocation(){ 
+    Promise.all([this.getPosition(),this.setTimer(1000)]).then(result=>{
+      console.log(result );
+    }).catch(error=>{
+      console.log(error);
+    });
+    // let positionData;
+    // let setTimer;
+    // try{
+    //   positionData=  await this.getPosition();
+    // setTimer= await this.setTimer(2000);
+    // }catch(error){
+    //   console.log(error);
+    }
+    
+    // console.log(positionData,setTimer);
+      // this.getPosition().then(
+      //   (posData)=>{
+      //     positionData=posData;
+      //     return this.setTimer(2000);
+      //   }
+      // )
+      // .then((data)=>{
+      //   console.log(data);
+      // }).catch(
+      //   err=>{
+      //     console.log(err);
+      //     return err;
+      //   }
+      // );
+  }

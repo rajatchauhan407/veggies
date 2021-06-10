@@ -14,6 +14,10 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { PricesComponent } from './home/prices/prices.component';
 import { ChooseQuantityPopUpComponent } from './home/prices/choose-quantity-pop-up/choose-quantity-pop-up.component';
+import { HttpClientModule } from '@angular/common/http';
+import { OtpDialogComponent } from './auth/sign-up/otp-dialog/otp-dialog.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { OtpLoginComponent } from './auth/login/otp-login/otp-login.component';
 
 
 @NgModule({
@@ -26,7 +30,10 @@ import { ChooseQuantityPopUpComponent } from './home/prices/choose-quantity-pop-
     HeaderComponent,
     HomeComponent,
     PricesComponent,
-    ChooseQuantityPopUpComponent
+    ChooseQuantityPopUpComponent,
+    OtpDialogComponent,
+    SpinnerComponent,
+    OtpLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +42,11 @@ import { ChooseQuantityPopUpComponent } from './home/prices/choose-quantity-pop-
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[ChooseQuantityPopUpComponent,OtpDialogComponent]
 })
 export class AppModule { }

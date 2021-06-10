@@ -1,12 +1,19 @@
     <form>
+      <div class="dialog-image">
+        <img mat-card-image [src]="image"> 
+      </div>   
         <mat-form-field appearance="fill">
-            <mat-label>Favorite food</mat-label>
+            <mat-label>Choose Quantity</mat-label>
             <mat-select [(ngModel)]="selectedQuantity" name="quant">
               <mat-option *ngFor="let qnt of quantity" [value]="qnt">
-                {{qnt}}
+                {{qnt+' '}}<b>Kg</b>
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-dialog-actions>
+            <button mat-raised-button color="primary" [mat-dialog-close]="true">Cancel</button>
+            <button mat-raised-button color="accent" [mat-dialog-close]="false">Add</button>
+          </mat-dialog-actions>
     </form>
     
       

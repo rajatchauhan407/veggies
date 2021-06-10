@@ -3,12 +3,16 @@
     <div fxHide.gt-xs><button mat-icon-button (click)="onToggle()">
         <mat-icon>menu</mat-icon>
     </button></div>
-    <div><a routerLink="/">LoGo</a></div>
+    <div><a routerLink="/">AFresh</a></div>
     <div fxFlex fxLayout="row"  fxLayoutAlign="end none" fxHide.xs>
         <ul fxLayout="row" fxLayoutGap="10px" class="navigation-items">
             <li><a routerLink="/signup">Sign Up</a></li>
             <li><a routerLink="/login">Sign In</a></li>
             <li><a routerLink="/learn">Veggies</a></li>
+            <li fxLayout="row"><a routerLink="/bucket">Bucket
+                <mat-icon fxFlex fxAlign="baseline" color="accent">add_shopping_cart</mat-icon>
+            </a>          
+            </li>
         </ul>
     </div>
 </mat-toolbar>

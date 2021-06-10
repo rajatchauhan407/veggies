@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth-services';
+import { OtpLoginComponent } from './otp-login/otp-login.component';
 
 @Component({
   selector: 'install-login',
@@ -6,10 +11,61 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public signIn:FormGroup;
+  public otp;
+  constructor( private authService:AuthService, 
+              private dialogue:MatDialog,
+              private router:Router) { }
 
-  constructor() { }
 
-  ngOnInit(): void {
+              openDialogue():void{
+                const dialogRef = this.dialogue.open(OtpLoginComponent,{
+                  width:"70%",
+                  data:{
+                  otp:this.otp
+                }});
+                dialogRef.disableClose = true;
+                dialogRef.afterClosed().subscribe(result=>{
+                  this.router.navigate(['']);
+                },error=>{
+                  console.log(error);
+                });
+              }
+
+              getUserOtp(conValue){
+                const promise= new Promise((resolve,reject)=>{
+                  this.authService.loginService(conValue).subscribe(
+                    response=>{
+                        console.log(response);
+                        resolve(response);
+                    },
+                    error=>{
+                      console.log(error);
+                      reject(error);
+                    }
+                );
+                });
+                return promise;
+              }
+
+
+  checkPhoneNumber(control:FormControl):{[s:string]:boolean} {
+    let inputtxt:string=control.value;
+    if(this.authService.phonenumber(control.value)===false){
+      return {'IncorrectPhoneNumber':true}
+    }
+    return null;
   }
+  ngOnInit():void {
+    this.signIn= new FormGroup({
+      'contact':new FormControl('',[Validators.required,this.checkPhoneNumber.bind(this)])
+    });
+   }
+   onSubmit(){
+     console.log(this.signIn.value.contact);
+     const phoneNo = this.signIn.value.contact;
+     this.getUserOtp(phoneNo);
+     
+   }
 
 }

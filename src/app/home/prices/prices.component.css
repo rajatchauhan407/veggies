@@ -8,6 +8,7 @@ h2{
 }
 .prices_container{
     padding:10px;
+    border-bottom:1px solid #e5e5e5;
 }
 .prices_container mat-card{
     margin-bottom: 10px;
@@ -18,5 +19,14 @@ h2{
    }
    .card-content{
        margin-bottom:0;
+   }
+   .prices_container button{
+       line-height:25px;
+   }
+   mat-card-actions{
+       padding: 0 0;
+   }
+   mat-card{
+       padding:6px 16px 16px 16px;
    }
   }

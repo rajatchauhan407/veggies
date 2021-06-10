@@ -6,18 +6,17 @@
         <mat-card-title fxLayoutAlign="center">Tomatoes</mat-card-title>
         <img mat-card-image [src]="image" >
         <mat-card-content fxLayoutAlign="space-between none" class="card-content">
-            <div><span><h2><i class="fa fa-inr"></i>40</h2></span></div>
+            <div><span><h2><i class="fa fa-inr"></i>40/kg</h2></span></div>
             <div><i class="fa fa-dot-circle-o" style="font-size:32px;color:green"></i></div>
         </mat-card-content>
         <mat-card-actions fxlayout="row">
-
-            <button mat-raised-button  fxFlex="100" type="submit" color="accent">
+            <button mat-raised-button  fxFlex="100" (click)="openDialogue()" type="submit" color="accent">
                 Add to bucket
             </button>
         </mat-card-actions>
-    </mat-card>
-    
+    </mat-card> 
 </section>
-<section>
+
+<!-- <section>
     <install-choose-quantity-pop-up></install-choose-quantity-pop-up>
-</section>
+</section> -->

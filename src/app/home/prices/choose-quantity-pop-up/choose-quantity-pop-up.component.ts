@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'install-choose-quantity-pop-up',
@@ -8,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class ChooseQuantityPopUpComponent implements OnInit {
   quantity:Number[]=[1,2,3,4,5];
   selectedQuantity:Number;
-  constructor() { 
-    
+  image:string;
+  constructor(@Inject(MAT_DIALOG_DATA) public img:any) { 
+    this.image=this.img.vegImage;
   }
 
   ngOnInit(): void {

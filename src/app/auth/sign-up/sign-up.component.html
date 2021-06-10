@@ -1,4 +1,7 @@
-<section fxLayout="column" fxLayoutAlign="none center">
+<div fxLayout="column" fxLayoutAlign="none center" *ngIf="isLoading">
+    <install-spinner></install-spinner>  
+</div>
+<section fxLayout="column" fxLayoutAlign="none center" *ngIf="!isLoading">
     <form  
     [formGroup]="signUp"
     (ngSubmit)="onSubmit()"
@@ -20,18 +23,13 @@
             <!-- <mat-hint align="end">{{pwInput.value?.length}} /10</mat-hint> -->
             <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
-        <!-- <mat-form-field class="sign-up-form">
-            <mat-label>Enter Otp</mat-label>
-            <input 
-            matInput  
-            type="password" 
-            placeholder="Enter The OTP Received"
-            >
-        </mat-form-field> -->
+        <!-- showing error if user already exists -->
+        <p fxFlexAlign="start" *ngIf="errorMessage && signUp.value.contact.length==10" class="not-mat-error">User Already Exits.. Redirecting to Login page </p>
         <button 
         type="submit" 
         mat-raised-button color="primary"
         [disabled]="!signUp.valid"
+        
         >Creat Account</button>
     </form>
     <div class="alternate-btn" fxLayout="row" fxLayoutAlign="none center">
