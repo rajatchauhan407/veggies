@@ -1,1 +1,15 @@
-<p>otp-login works!</p>
+<section fxLayout="column" fxLayoutAlign="none center" fxLayoutAlign.xs="none start">
+    <mat-form-field appearance="standard">
+        <mat-label>Please Enter Your OTP</mat-label>
+        <input 
+        matInput 
+        #enteredOtp 
+        required
+        minlength= "4"
+        maxlength= "4"
+        >
+    </mat-form-field>
+    <p class="error" *ngIf="!checkOtp">Please enter correct Otp</p>   
+    <button color="accent" type="button" (click)="beforeClosed()" mat-raised-button>Submit</button> 
+</section>
+

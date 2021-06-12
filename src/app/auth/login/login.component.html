@@ -1,22 +1,41 @@
-<section class="login">
-    <form [formGroup]="signIn" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="none center">
-        <mat-form-field class="sign-up-form">
-            <input 
-            matInput 
-            type="input" 
-            placeholder="Enter Phone Number"
-            minlength="10"
-            maxlength="10"
-            formControlName="contact">
-            <mat-error *ngIf="signIn.get('contact').value=='' "> 
-                Please Enter Phone Number</mat-error>
-            <mat-error *ngIf="signIn.get('contact').errors!==null && signIn.get('contact').value!==''"> Please Enter Correct Phone Number</mat-error>
-            <mat-icon matSuffix>phone</mat-icon>
-        </mat-form-field>
-        <button 
-        type="submit" 
-        mat-raised-button 
-        color="primary" 
-        [disabled]="!signIn.valid">Login With OTP</button>
-    </form>
+<div fxLayout="column" fxLayoutAlign="none center" *ngIf="isLoading">
+  <install-spinner></install-spinner>
+</div>
+<section fxLayout="column" fxLayoutAlign="none center" class="login" *ngIf="!isLoading">
+  <form
+    [formGroup]="signIn"
+    (ngSubmit)="onSubmit()"
+    fxLayout="column"
+    fxLayoutAlign="none center"
+  >
+    <mat-form-field class="sign-up-form">
+      <input
+        matInput
+        type="input"
+        placeholder="Enter Phone Number"
+        minlength="10"
+        maxlength="10"
+        formControlName="contact"
+      />
+      <mat-error *ngIf="signIn.get('contact').value == ''">
+        Please Enter Phone Number</mat-error
+      >
+      <mat-error
+        *ngIf="
+          signIn.get('contact').errors !== null &&
+          signIn.get('contact').value !== ''
+        ">
+        Please Enter Correct Phone Number</mat-error>
+    <mat-icon matSuffix>phone</mat-icon>
+    </mat-form-field>
+    <p fxFlexAlign="start" *ngIf="errorMessage" class="not-mat-error">User does not Exists.. Redirecting to Login page </p>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="!signIn.valid"
+    >
+      Login With OTP
+    </button>
+  </form>
 </section>

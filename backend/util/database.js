@@ -2,7 +2,7 @@ const mongodb= require('mongodb');
 const MongoClient= mongodb.MongoClient;
 let _db;
 const mongoConnect=(callback)=>{
-    MongoClient.connect('mongodb+srv://rajat_veggi1304:ZyBWVsLkki1MtFKG@veggies.znzgp.mongodb.net/users?retryWrites=true&w=majority',{ useUnifiedTopology: true }).then(
+    MongoClient.connect('mongodb+srv://rajat_veggi1304:' + process.env.MONGO_ATLAS_PW + '@veggies.znzgp.mongodb.net/users?retryWrites=true&w=majority',{ useUnifiedTopology: true }).then(
     client=>{
         console.log('Connected');
         _db= client.db();

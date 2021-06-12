@@ -7,3 +7,13 @@ button{
 .login{
     padding-top:20px;
 }
+.not-mat-error{
+    color:red;
+    margin-top:-10px;
+}
+.card-container{
+    display:flex;
+    width:100%;
+    flex-direction:row;
+    justify-content:space-between;
+}
