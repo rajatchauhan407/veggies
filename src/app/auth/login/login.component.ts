@@ -31,9 +31,19 @@ export class LoginComponent implements OnInit {
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(
       (result) => {
+        const expiresInduration= this.authResponse.expiresIn;
+        const token = this.authResponse.token;    
+        this.authService.token = token;           //putting value of token in present in AuthService
+        this.authService.setAuthTimer(expiresInduration);
+        const now = new Date();
+        const expirationDate= new Date(now.getTime() + expiresInduration*1000);
+        this.authService.saveAuthData(token,expirationDate);
+        // this.authService.authStatusListener.next(true);
+        this.authService.isAuth= true;
         this.router.navigate(['']);
       },
       (error) => {
+        this.authService.isAuth= false;
         console.log(error);
       }
     );
@@ -76,17 +86,18 @@ export class LoginComponent implements OnInit {
     const phoneNo = this.signIn.value.contact;
     this.getUserOtp(phoneNo).then((response:any) =>{
       console.log(response);
-      if(response.message == 'user does not exist'){
-          this.isLoading=false;
-          this.errorMessage = true;
-          setTimeout(()=>{
-            this.router.navigate(['/signup']);
-          },2000);
-      }else{
-        this.isLoading = false;
-        this.authResponse = response;
+      if(response.token){
+        this.isLoading= false;
+        this.authResponse= response;
         this.openDialogue();
       }
+    }).catch(error =>{
+      this.isLoading=false;
+      this.errorMessage= true;
+      console.log(error.error.message);
+        setTimeout(()=>{
+        this.router.navigate(['/signup']);
+        },2000);
     });
   }
 }

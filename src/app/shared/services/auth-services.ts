@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../models/user.model';
 const BACKEND_URL = environment.Url;
@@ -10,14 +11,24 @@ const BACKEND_URL = environment.Url;
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
-  private tokenTimer;
-  private token: string;
-  private isAuth = false;
+  private tokenTimer:NodeJS.Timer;
+  public token: string;
+  public isAuth = false;
+  public authStatusListener = new Subject<boolean>();
+
+  /***************Getting Token *****/
+  getToken() {
+    return this.token;
+  }
   /********** Request to create User ************/
   createUser(phoneNo: string) {
     const user: User = { contact: phoneNo };
     console.log(user);
     return this.http.post<User>(BACKEND_URL + '/signUp', user);
+  }
+  /* listening to the status of authentication */
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
   }
   /**************** Request to Login from the User ***********/
   loginService(phoneNo) {
@@ -33,6 +44,10 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+  /******** Authentication Getter */
+  getIsAuth() {
+    return this.isAuth;
   }
   //saving data in local storage
   saveAuthData(token: string, expirationDate: Date) {
@@ -55,5 +70,36 @@ export class AuthService {
     this.token = null;
     this.clearAuthData();
     clearTimeout(this.tokenTimer);
+  }
+  // Getting the auth data from localstorage
+  getAuthData() {
+    const token = localStorage.getItem('token');
+    const expirationDate = localStorage.getItem('expirationDate');
+    //if no token then return null
+    if (!token) {
+      return;
+    }
+    // if Token is there then accessing data from localstorage and returning it in form of an object
+    if (token) {
+      return {
+        token: token,
+        expirationDate: new Date(expirationDate),
+      };
+    }
+  }
+  //Automatically authenticate User
+  autoAuthUser() {
+    const autoAuthInfo = this.getAuthData();
+    if (!autoAuthInfo) {
+      return;
+    }
+    const now = new Date();
+    const expiresIn = autoAuthInfo.expirationDate.getTime() - now.getTime(); //if the date exists in future
+    console.log('Setting Auth Timer' + expiresIn);
+    if (expiresIn > 0) {
+      this.token = autoAuthInfo.token;
+      this.isAuth = true;
+      this.setAuthTimer(expiresIn / 1000);
+    }
   }
 }

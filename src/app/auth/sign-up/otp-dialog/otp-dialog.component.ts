@@ -19,7 +19,7 @@ export class OtpDialogComponent implements OnInit {
               private router:Router,
               public dialogRef:MatDialogRef<OtpDialogComponent>) {
     // console.log(this.passedOtp.otp);
-    this.otp = this.passedOtp.otp.otp;
+    this.otp = this.passedOtp.otp;
    }
    beforeClosed(){
     //  this.dialogRef.close();

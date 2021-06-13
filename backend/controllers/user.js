@@ -1,8 +1,8 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-// creating the user and otp verification
-var val;
-var response;
+// // creating the user and otp verification
+// var val;
+// var response;
 
 const generateOtp = (phoneNo) => {
   const promise = new Promise((resolve, reject) => {
@@ -32,14 +32,25 @@ const generateOtp = (phoneNo) => {
 exports.createUser = (req, res, next) => {
   // console.log(req.body.contact);\
   const contactNo = req.body.contact;
-  const user = new User(contactNo);
+  const user = new User({
+    phoneNo: contactNo
+  });
+
   generateOtp(contactNo)
     .then((data) => {
       const otpSent = data;
       user.save().then((result) => {
+        const token = jwt.sign({
+          contact: contactNo
+        },
+        process.env.JWT_KEY,
+        {
+          expiresIn:'1h'
+        });
         res.status(200).json({
           otp: otpSent,
-          message: "Message sent successfully",
+          token:token,
+          expiresIn:3600
         });
       });
       // console.log("data sent successfully");
@@ -53,12 +64,17 @@ exports.createUser = (req, res, next) => {
     });
 };
 exports.loginUser = (req, res, next) => {
+  // console.log(req.body);
+  // console.log(req.body.contact);
   const contactNo = req.body.contact;
-  const user = new User(contactNo);
+  const user = new User({
+    phoneNo:contactNo
+  });
 
   user
-    .findUser(contactNo)
+    .find()
     .then((result) => {
+      console.log(result);
         if(result != null){
             generateOtp(contactNo).then((data) => {
                 const otpSent = data;
@@ -72,11 +88,11 @@ exports.loginUser = (req, res, next) => {
                 res.status(200).json({
                   otp: otpSent,
                   token:token,
-                  expiresIn: 3600
+                  expiresIn:3600
                 });
               })
         }else {
-            res.json({
+            res.status(501).json({
                 message: 'user does not exist'
             })
         } 
@@ -94,27 +110,27 @@ exports.loginUser = (req, res, next) => {
 //     message:"message sent successfully"
 // });
 
-// sending text sms
-// const user = new User(contactNo);
-// user.save().then(
-//     result=>{
-//         res.status(201).json({
-//             message:"Phone No added SuccessFully",
-//             sid:"Message send to user",
-//             otp:val,
-//             responseData:response
-//         })
-//     }
-// ).catch(error=>{
-//     res.status(501).json({
-//         message:"Could Not Add Phone Number",
-//         error:error
-//     })
-// })
-// stat = {
-//     agentsCount: '',
-//     salesPartener: '',
-//     hostCount: '',
-//     tenantCount: '',
-//     totalRevenue: ''
-// }
+// // sending text sms
+// // const user = new User(contactNo);
+// // user.save().then(
+// //     result=>{
+// //         res.status(201).json({
+// //             message:"Phone No added SuccessFully",
+// //             sid:"Message send to user",
+// //             otp:val,
+// //             responseData:response
+// //         })
+// //     }
+// // ).catch(error=>{
+// //     res.status(501).json({
+// //         message:"Could Not Add Phone Number",
+// //         error:error
+// //     })
+// // })
+// // stat = {
+// //     agentsCount: '',
+// //     salesPartener: '',
+// //     hostCount: '',
+// //     tenantCount: '',
+// //     totalRevenue: ''
+// // }

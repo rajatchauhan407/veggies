@@ -14,10 +14,11 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { PricesComponent } from './home/prices/prices.component';
 import { ChooseQuantityPopUpComponent } from './home/prices/choose-quantity-pop-up/choose-quantity-pop-up.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OtpDialogComponent } from './auth/sign-up/otp-dialog/otp-dialog.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { OtpLoginComponent } from './auth/login/otp-login/otp-login.component';
+import { AuthInterceptor } from './shared/services/auth.interceptor';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { OtpLoginComponent } from './auth/login/otp-login/otp-login.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}],
   bootstrap: [AppComponent],
   entryComponents:[ChooseQuantityPopUpComponent,OtpDialogComponent]
 })

@@ -18,6 +18,7 @@ public enteredOtp;
 public errorMessage = false;
 public isLoading:boolean = false;
 public contactNumber;
+private authResponse;
 
   constructor(private authService:AuthService, 
               private dialogue:MatDialog,
@@ -28,11 +29,19 @@ public contactNumber;
     const dialogRef = this.dialogue.open(OtpDialogComponent,{
       width:"70%",
       data:{
-      otp:this.otp
+      otp:this.authResponse.otp
     }});
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result=>{
-      this.router.navigate(['']);
+      const expiresInduration= this.authResponse.expiresIn;
+        const token = this.authResponse.token;
+        this.authService.token = token        // assigning value in the token present in AuthService
+        this.authService.setAuthTimer(expiresInduration);
+        const now = new Date();
+        const expirationDate= new Date(now.getTime() + expiresInduration*1000);
+        this.authService.saveAuthData(token,expirationDate);
+        this.authService.authStatusListener.next(true);
+        this.router.navigate(['']);
     },error=>{
       console.log(error);
     });
@@ -59,9 +68,9 @@ public contactNumber;
       // console.log(this.phonenumber(this.signUp.value.contact));
       this.isLoading = true;
       this.getUserOtp(conValue).then(
-        otpSent=>{
+        response=>{
           this.isLoading = false;
-          this.otp = otpSent;
+          this.authResponse = response;
           this.openDialogue();
         }
       ).catch(
