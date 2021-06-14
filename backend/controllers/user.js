@@ -87,6 +87,7 @@ exports.loginUser = (req, res, next) => {
   // console.log(req.body);
   // console.log(req.body.contact);
   const contactNo = req.body.contact;
+  CONTACT=req.body.contact;
   User
     .findOne({
       'phoneNo':contactNo
@@ -96,6 +97,7 @@ exports.loginUser = (req, res, next) => {
           console.log(result);
             generateOtp(contactNo).then((data) => {
                 const otpSent = data;
+                OTP=otpSent;
                 const token = jwt.sign({
                   contact: contactNo
                 },

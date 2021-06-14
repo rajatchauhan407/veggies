@@ -25,21 +25,23 @@ export class LoginComponent implements OnInit {
     const dialogRef = this.dialogue.open(OtpLoginComponent, {
       width: '70%',
       data: {
-        otp: this.authResponse.otp,
+        otp:this.authResponse.otp,
+        token: this.authResponse.token,
+        expiresIn: this.authResponse.expiresIn
       },
     });
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(
       (result) => {
-        const expiresInduration= this.authResponse.expiresIn;
-        const token = this.authResponse.token;    
-        this.authService.token = token;           //putting value of token in present in AuthService
-        this.authService.setAuthTimer(expiresInduration);
-        const now = new Date();
-        const expirationDate= new Date(now.getTime() + expiresInduration*1000);
-        this.authService.saveAuthData(token,expirationDate);
-        // this.authService.authStatusListener.next(true);
-        this.authService.isAuth= true;
+        // const expiresInduration= this.authResponse.expiresIn;
+        // const token = this.authResponse.token;    
+        // this.authService.token = token;           //putting value of token in present in AuthService
+        // this.authService.setAuthTimer(expiresInduration);
+        // const now = new Date();
+        // const expirationDate= new Date(now.getTime() + expiresInduration*1000);
+        // this.authService.saveAuthData(token,expirationDate);
+        // // this.authService.authStatusListener.next(true);
+        // this.authService.isAuth= true;
         this.router.navigate(['']);
       },
       (error) => {
