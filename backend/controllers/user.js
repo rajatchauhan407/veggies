@@ -1,8 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-// // creating the user and otp verification
-// var val;
-// var response;
+// creating the user and otp verification
 
 const generateOtp = (phoneNo) => {
   const promise = new Promise((resolve, reject) => {
@@ -28,30 +26,34 @@ const generateOtp = (phoneNo) => {
   });
   return promise;
 };
+
+
 /************Create User login ***********/
 let OTP;
 let CONTACT;
 exports.createUser = (req, res, next) => {
-  // console.log(req.body.contact);\
+  // console.log(req.body.contact);
   const contactNo = req.body.contact;
-  CONTACT= req.body.contact;
+  CONTACT = req.body.contact;
   generateOtp(contactNo)
     .then((data) => {
       const otpSent = data;
-      OTP= data;
-      const token = jwt.sign({
-        contact: contactNo
-      },
-      process.env.JWT_KEY,
-      {
-        expiresIn:'1h'
-      });
+      OTP = data;
+      const token = jwt.sign(
+        {
+          contact: contactNo,
+        },
+        process.env.JWT_KEY,
+        {
+          expiresIn: "1h",
+        }
+      );
       res.status(200).json({
         otp: otpSent,
-        token:token,
-        expiresIn:3600
+        token: token,
+        expiresIn: 3600,
       });
-     
+
       // console.log("data sent successfully");
     })
     .catch((error) => {
@@ -62,60 +64,64 @@ exports.createUser = (req, res, next) => {
       });
     });
 };
-exports.userVerify = (req, res, next)=>{
+// Verifying User's Otp
+exports.userVerify = (req, res, next) => {
   // console.log(req.body);
   // console.log(OTP);
   // console.log(CONTACT);
-  const otp= req.body.value;
-  if(OTP==otp){
+  const otp = req.body.value;
+  if (OTP == otp) {
     const user = new User({
-      'phoneNo': CONTACT
+      phoneNo: CONTACT,
     });
     user.save().then((result) => {
-      OTP=null;
-      CONTACT=null;
+      OTP = null;
+      CONTACT = null;
       res.status(201).json({
-        result:true
-      })
+        result: true,
+      });
     });
-  }else{
+  } else {
     console.log(req.body);
   }
-}
+};
+
+
 /**************User Login Controller ********/
 exports.loginUser = (req, res, next) => {
   // console.log(req.body);
   // console.log(req.body.contact);
   const contactNo = req.body.contact;
-  CONTACT=req.body.contact;
-  User
-    .findOne({
-      'phoneNo':contactNo
-    })
+  CONTACT = req.body.contact;
+  User.findOne({
+    phoneNo: contactNo,
+  })
     .then((result) => {
-        if(result){
-          console.log(result);
-            generateOtp(contactNo).then((data) => {
-                const otpSent = data;
-                OTP=otpSent;
-                const token = jwt.sign({
-                  contact: contactNo
-                },
-                process.env.JWT_KEY,
-                {
-                  expiresIn:'1h'
-                });
-                res.status(200).json({
-                  otp: otpSent,
-                  token:token,
-                  expiresIn:3600
-                });
-              })
-        }else {
-            res.status(500).json({
-                message: 'user does not exist'
-            })
-        } 
+      if (result) {
+        console.log(result);
+        generateOtp(contactNo).then((data) => {
+          const otpSent = data;
+          OTP = otpSent;
+          const token = jwt.sign(
+            {
+              contact: contactNo,
+            },
+            process.env.JWT_KEY,
+            {
+              expiresIn: "1h",
+            }
+          );
+          res.status(200).json({
+            otp: otpSent,
+            token: token,
+            expiresIn: 3600,
+          });
+        });
+      } else {
+        res.status(500).json({
+          message: "user does not exist",
+        });
+      }
     })
     .catch((error) => {
       res.status(501).json({
@@ -124,33 +130,3 @@ exports.loginUser = (req, res, next) => {
       });
     });
 };
-// console.log(otp);
-// res.status(200).json({
-//     otp:val,
-//     message:"message sent successfully"
-// });
-
-// // sending text sms
-// // const user = new User(contactNo);
-// // user.save().then(
-// //     result=>{
-// //         res.status(201).json({
-// //             message:"Phone No added SuccessFully",
-// //             sid:"Message send to user",
-// //             otp:val,
-// //             responseData:response
-// //         })
-// //     }
-// // ).catch(error=>{
-// //     res.status(501).json({
-// //         message:"Could Not Add Phone Number",
-// //         error:error
-// //     })
-// // })
-// // stat = {
-// //     agentsCount: '',
-// //     salesPartener: '',
-// //     hostCount: '',
-// //     tenantCount: '',
-// //     totalRevenue: ''
-// // }

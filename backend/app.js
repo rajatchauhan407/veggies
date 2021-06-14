@@ -2,6 +2,7 @@
 const express=require('express');
 const app= express();
 const userRoutes= require('./routes/userRoutes');
+const vegRoutes= require('./routes/vegRoutes');
 const mongoose = require('mongoose');
 // const mongoConnect = require('./util/database').mongoConnect;
 // mongoConnect();
@@ -23,6 +24,7 @@ app.use((req,res,next)=>{
 
 
 app.use(userRoutes);
+app.use(vegRoutes);
 
 // app.listen(3000);
 module.exports=app;
