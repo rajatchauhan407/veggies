@@ -29,18 +29,12 @@ private authResponse;
     const dialogRef = this.dialogue.open(OtpDialogComponent,{
       width:"70%",
       data:{
-      otp:this.authResponse.otp
+      otp:this.authResponse.otp,
+      token: this.authResponse.token,
+      expiresIn: this.authResponse.expiresIn
     }});
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result=>{
-      const expiresInduration= this.authResponse.expiresIn;
-        const token = this.authResponse.token;
-        this.authService.token = token        // assigning value in the token present in AuthService
-        this.authService.setAuthTimer(expiresInduration);
-        const now = new Date();
-        const expirationDate= new Date(now.getTime() + expiresInduration*1000);
-        this.authService.saveAuthData(token,expirationDate);
-        this.authService.authStatusListener.next(true);
         this.router.navigate(['']);
     },error=>{
       console.log(error);

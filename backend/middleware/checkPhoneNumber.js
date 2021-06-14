@@ -2,10 +2,10 @@ const User = require("../models/user");
 module.exports = (req, res, next) => {
   try {
     const contactNo = req.body.contact;
-    User.find({
-      phoneNo:contactNo
+    User.findOne({
+      'phoneNo':contactNo
     }).then((result) => {
-      if (result == null) {
+      if (!result) {
         console.log(result);
         next();
       } else {

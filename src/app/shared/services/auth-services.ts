@@ -102,4 +102,12 @@ export class AuthService {
       this.setAuthTimer(expiresIn / 1000);
     }
   }
+
+  /******* Otp Verification  ************/
+
+  otpVerification(otp){
+    console.log(otp);
+    const otpSent={value:otp}
+    return this.http.post<{result:boolean}>(BACKEND_URL + '/verifyOtp', otpSent);
+  }
 }

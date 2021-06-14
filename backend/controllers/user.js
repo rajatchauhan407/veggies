@@ -28,31 +28,30 @@ const generateOtp = (phoneNo) => {
   });
   return promise;
 };
-
+/************Create User login ***********/
+let OTP;
+let CONTACT;
 exports.createUser = (req, res, next) => {
   // console.log(req.body.contact);\
   const contactNo = req.body.contact;
-  const user = new User({
-    phoneNo: contactNo
-  });
-
+  CONTACT= req.body.contact;
   generateOtp(contactNo)
     .then((data) => {
       const otpSent = data;
-      user.save().then((result) => {
-        const token = jwt.sign({
-          contact: contactNo
-        },
-        process.env.JWT_KEY,
-        {
-          expiresIn:'1h'
-        });
-        res.status(200).json({
-          otp: otpSent,
-          token:token,
-          expiresIn:3600
-        });
+      OTP= data;
+      const token = jwt.sign({
+        contact: contactNo
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn:'1h'
       });
+      res.status(200).json({
+        otp: otpSent,
+        token:token,
+        expiresIn:3600
+      });
+     
       // console.log("data sent successfully");
     })
     .catch((error) => {
@@ -63,19 +62,38 @@ exports.createUser = (req, res, next) => {
       });
     });
 };
+exports.userVerify = (req, res, next)=>{
+  // console.log(req.body);
+  // console.log(OTP);
+  // console.log(CONTACT);
+  const otp= req.body.value;
+  if(OTP==otp){
+    const user = new User({
+      'phoneNo': CONTACT
+    });
+    user.save().then((result) => {
+      OTP=null;
+      CONTACT=null;
+      res.status(201).json({
+        result:true
+      })
+    });
+  }else{
+    console.log(req.body);
+  }
+}
+/**************User Login Controller ********/
 exports.loginUser = (req, res, next) => {
   // console.log(req.body);
   // console.log(req.body.contact);
   const contactNo = req.body.contact;
-  const user = new User({
-    phoneNo:contactNo
-  });
-
-  user
-    .find()
+  User
+    .findOne({
+      'phoneNo':contactNo
+    })
     .then((result) => {
-      console.log(result);
-        if(result != null){
+        if(result){
+          console.log(result);
             generateOtp(contactNo).then((data) => {
                 const otpSent = data;
                 const token = jwt.sign({
@@ -92,7 +110,7 @@ exports.loginUser = (req, res, next) => {
                 });
               })
         }else {
-            res.status(501).json({
+            res.status(500).json({
                 message: 'user does not exist'
             })
         } 
