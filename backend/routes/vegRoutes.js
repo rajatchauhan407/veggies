@@ -9,4 +9,5 @@ router.get("/prices",vegController.getPrices);
 router.post("/bucket",vegController.addVegBucket);
 router.get("/bucket",vegController.getVegBucket);
 router.post("/orders",vegController.orders);
+
 module.exports=router;

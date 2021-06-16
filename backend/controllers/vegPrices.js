@@ -1,28 +1,30 @@
 const Vege = require('../models/vege');
-const Bucket = require('../models/vege');
+const Bucket = require('../models/bucket');
+const Orders = require('../models/orders');
 /***************Adding Prices to the menu of vegetable*******/
-exports.prices =(req,res,next)=>{
+exports.prices = (req,res,next)=>{
  const vege = new Vege({
-    name:  req.body.name,
-    vCode: req.body.vCode,
-    price: req.body.price,
-    availability: req.body.availability
+    vegName:req.body.name,
+    vCode:req.body.vCode,
+    price:req.body.price,
+    availability:req.body.availability
  });
  vege.save().then(result =>{
     res.status(200).json({
         message:"Data is being sent"
     })
  }).catch(error=>{
+     console.log(error);
      res.status(501).json({
          message:error
      })
  });  
-}
+};
 /******************Getting Prices and All products *******/
 exports.getPrices=(req,res,next)=>{
         Vege.find().then(result =>{
             res.status(201).json({
-              response:result[1]
+              response:result
             });
         }).catch(error=>{
             console.log(error);
@@ -55,10 +57,10 @@ exports.getVegBucket = (req, res, next)=>{
                 response : result
             });
     })
-}
+};
 /******************* Add Orders ***********/
 exports.orders = (req, res, next)=>{
     res.status(201).json({
         message: 'Data is being sent'
     })
-}
+};

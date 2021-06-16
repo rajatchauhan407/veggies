@@ -2,15 +2,22 @@
     class="prices_container"  
     fxLayout="row wrap"  
     fxLayoutAlign="space-between" fxLayoutAlign.gt-xs="space-between" fxLayoutGap.gt-xs="10px">
-    <mat-card tabIndex="0" fxFlex.xs="48" fxFlex.gt-xs="30" fxLayout="column" fxLayoutAlign="center">
-        <mat-card-title fxLayoutAlign="center">Tomatoes</mat-card-title>
+    <mat-card 
+    tabIndex="0" 
+    fxFlex.xs="48" 
+    fxFlex.gt-xs="30" 
+    fxLayout="column" 
+    fxLayoutAlign="center"
+    *ngFor="let veg of vegData">
+        <mat-card-title fxLayoutAlign="center">{{veg.vegName}}</mat-card-title>
         <img mat-card-image [src]="image" >
         <mat-card-content fxLayoutAlign="space-between none" class="card-content">
-            <div><span><h2><i class="fa fa-inr"></i>40/kg</h2></span></div>
-            <div><i class="fa fa-dot-circle-o" style="font-size:32px;color:green"></i></div>
+            <div><span><h2><i class="fa fa-inr"></i> {{veg.price}} </h2></span></div>
+            <div *ngIf="veg.availability"><i class="fa fa-dot-circle-o" style="font-size:32px;color:green"></i></div>
+            <div *ngIf="!veg.availability"><i class="fa fa-dot-circle-o" style="font-size:32px;color:red"></i></div>
         </mat-card-content>
         <mat-card-actions fxlayout="row">
-            <button mat-raised-button  fxFlex="100" (click)="openDialogue()" type="submit" color="accent">
+            <button mat-raised-button  fxFlex="100" (click)="openDialogue(veg)" type="submit" color="accent">
                 Add to bucket
             </button>
         </mat-card-actions>

@@ -10,8 +10,11 @@ export class ChooseQuantityPopUpComponent implements OnInit {
   quantity:Number[]=[1,2,3,4,5];
   selectedQuantity:Number;
   image:string;
-  constructor(@Inject(MAT_DIALOG_DATA) public img:any) { 
-    this.image=this.img.vegImage;
+  vegData;
+  constructor(@Inject(MAT_DIALOG_DATA) public data:any) { 
+    this.image=this.data.vegImage;
+    this.vegData= this.data.vegData;
+    console.log(this.vegData);
   }
 
   ngOnInit(): void {
