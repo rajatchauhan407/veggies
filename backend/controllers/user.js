@@ -10,7 +10,6 @@ const generateOtp = (phoneNo) => {
     var client = new twilio(accountSid, authToken);
     val = Math.floor(1000 + Math.random() * 9000);
     // console.log(message.dateCreated);
-
     client.messages
       .create({
         body: `Your Veggies verification Code is ${val}`,
@@ -28,13 +27,17 @@ const generateOtp = (phoneNo) => {
 };
 
 
-/************Create User login ***********/
+/************Create User ***********/
 let OTP;
 let CONTACT;
 exports.createUser = (req, res, next) => {
   // console.log(req.body.contact);
   const contactNo = req.body.contact;
   CONTACT = req.body.contact;
+  const user = new User({
+    phoneNo : contactNo
+  });
+ 
   generateOtp(contactNo)
     .then((data) => {
       const otpSent = data;
@@ -48,15 +51,16 @@ exports.createUser = (req, res, next) => {
           expiresIn: "1h",
         }
       );
-      res.status(200).json({
-        otp: otpSent,
-        token: token,
+      return token;
+    }).then(result =>{
+      res.status(201).json({
+        otp: OTP,
+        token: result,
         expiresIn: 3600,
       });
-
-      // console.log("data sent successfully");
     })
     .catch((error) => {
+      console.log(error);
       res.status(500).json({
         message: "Internal Error ! Could not resolve the request",
         message1: "Incorrect phone Number! Could not send message",
@@ -64,39 +68,51 @@ exports.createUser = (req, res, next) => {
       });
     });
 };
-// Verifying User's Otp
-exports.userVerify = (req, res, next) => {
-  // console.log(req.body);
-  // console.log(OTP);
-  // console.log(CONTACT);
+/************* Sign Up user verify *******/
+exports.verifySignUp = (req,res, next) =>{
   const otp = req.body.value;
+  console.log(otp);
+  const user = new User({
+    phoneNo : CONTACT
+  });
   if (OTP == otp) {
-    const user = new User({
-      phoneNo: CONTACT,
-    });
-    user.save().then((result) => {
-      OTP = null;
-      CONTACT = null;
-      res.status(201).json({
-        result: true,
-      });
+    user.save();
+    res.status(201).json({
+      result: true,
     });
   } else {
-    console.log(req.body);
+    res.status(500).json({
+      message: "Otp Not Verified !"
+    })
+  }
+};
+// Verifying User's Otp via user-login 
+exports.userVerify = (req, res, next) => {
+  const otp = req.body.value;
+  const OrigOtp = OTP;
+  const contact = CONTACT;
+  const user = new User({
+    phoneNo : CONTACT
+  });
+  if (OrigOtp == otp) {
+    res.status(201).json({
+      result: true,
+    });
+  } else {
+    res.status(500).json({
+      message: "Otp Not Verified !"
+    })
   }
 };
 
 
 /**************User Login Controller ********/
 exports.loginUser = (req, res, next) => {
-  // console.log(req.body);
-  // console.log(req.body.contact);
   const contactNo = req.body.contact;
   CONTACT = req.body.contact;
   User.findOne({
     phoneNo: contactNo,
-  })
-    .then((result) => {
+  }).then((result) => {
       if (result) {
         console.log(result);
         generateOtp(contactNo).then((data) => {
@@ -108,13 +124,14 @@ exports.loginUser = (req, res, next) => {
             },
             process.env.JWT_KEY,
             {
-              expiresIn: "1h",
+              expiresIn: "24h",
             }
           );
           res.status(200).json({
             otp: otpSent,
             token: token,
-            expiresIn: 3600,
+            expiresIn: 3600*24,
+            userId:result._id
           });
         });
       } else {
@@ -129,4 +146,29 @@ exports.loginUser = (req, res, next) => {
         error: error,
       });
     });
+};
+/*******************Get User Id *********/
+exports.getUserId = (req,res,next)=>{
+  try{
+    const token= req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token,process.env.JWT_KEY);
+    //  console.log(decodedToken);
+    const contactNo = decodedToken.contact;
+    User.find({
+        'phoneNo' : contactNo
+    }).then((result) => {
+      res.status(201).json({
+        userId:result[0]._id.toString()
+      });
+    }).catch(error =>{
+      res.status(501).json({
+        message : "something went wrong"
+      })
+        console.log(error);
+    });
+}catch(error){
+    res.status(401).json({
+        message:'Auth Failed'
+    })
+}
 };

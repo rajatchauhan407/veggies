@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private dialogue: MatDialog,
-    private router: Router
+    private router: Router,
   ) {}
 
   openDialogue(): void {
@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
         // const expirationDate= new Date(now.getTime() + expiresInduration*1000);
         // this.authService.saveAuthData(token,expirationDate);
         // // this.authService.authStatusListener.next(true);
+        this.authService.autoAuthUser();
         // this.authService.isAuth= true;
         this.router.navigate(['']);
       },
@@ -87,10 +88,11 @@ export class LoginComponent implements OnInit {
     console.log(this.signIn.value.contact);
     const phoneNo = this.signIn.value.contact;
     this.getUserOtp(phoneNo).then((response:any) =>{
-      console.log(response);
+      // console.log(response);
       if(response.token){
         this.isLoading= false;
         this.authResponse= response;
+        this.authService.setUserId(response.userId);
         this.openDialogue();
       }
     }).catch(error =>{

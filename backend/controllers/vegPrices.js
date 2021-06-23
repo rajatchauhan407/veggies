@@ -1,6 +1,7 @@
 const Vege = require('../models/vege');
 const Bucket = require('../models/bucket');
 const Orders = require('../models/orders');
+const url = require('url');
 /***************Adding Prices to the menu of vegetable*******/
 exports.prices = (req,res,next)=>{
  const vege = new Vege({
@@ -10,6 +11,7 @@ exports.prices = (req,res,next)=>{
     availability:req.body.availability
  });
  vege.save().then(result =>{
+     console.log(req.userId);
     res.status(200).json({
         message:"Data is being sent"
     })
@@ -21,10 +23,12 @@ exports.prices = (req,res,next)=>{
  });  
 };
 /******************Getting Prices and All products *******/
-exports.getPrices=(req,res,next)=>{
-        Vege.find().then(result =>{
+exports.getPrices=(req,res,next)=>{  
+    Vege.find().then(result =>{
+        console.log(req.res.locals.userId);
             res.status(201).json({
-              response:result
+              response:result,
+              userId: req.res.locals.userId
             });
         }).catch(error=>{
             console.log(error);
@@ -51,12 +55,41 @@ exports.addVegBucket = (req,res,next)=>{
 };
 /****************** Getting vegetables in the bucket *******/
 exports.getVegBucket = (req, res, next)=>{
-    const userId = req.body.userId;
-    Bucket.find({'userId': userId}).then(result =>{
-            res.status(201).json({
-                response : result
+    const userId = req.query.id;
+    const pageSize = +req.query.pageSize;
+    const currentPage = +req.query.currentPage;
+    // console.log(req.query);
+    const BucketQuery = Bucket.find({'userId': userId});
+    let fetchedBucket;
+    let subTotal=0;
+    function calculateSubtotal(){
+        Bucket.find({'userId' : userId}).then((result) => {
+            result.forEach(data => {
+                subTotal += data.quantity * data.price;
+                // console.log(data.quantity * data.price);
             });
-    })
+            console.log(subTotal);
+        });
+    }
+    calculateSubtotal();
+    if(userId && pageSize && currentPage){
+        BucketQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    }   
+        BucketQuery.then(result =>{
+            fetchedBucket = result;
+           return Bucket.countDocuments({'userId': userId});
+    }).then(count =>{
+            res.status(201).json({
+                response : fetchedBucket,
+                bucketCount : count,
+                subTotal :subTotal
+            });
+    }).catch(error=>{
+        console.log(error);
+        res.status(501).json({
+            message:"Could not get resolve the request"
+        })
+    });
 };
 /******************* Add Orders ***********/
 exports.orders = (req, res, next)=>{
@@ -64,3 +97,23 @@ exports.orders = (req, res, next)=>{
         message: 'Data is being sent'
     })
 };
+
+/***********Delete data from bucket ********/
+exports.bucketDelete = (req,res,next) =>{
+    const id = req.query.id;
+    console.log(id);
+    Bucket.deleteOne({ _id : id}).then(
+        result =>{
+            if(result.n > 0){
+                res.status(201).json({
+                    message: " Deleted Successfully"
+                })
+            }
+        }
+    ).catch(error => {
+        res.status(501).json({
+            message: "Could not delete successfully",
+            error : error
+        })
+    })
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth-services';
 
 @Component({
   selector: 'install-check-compo',
@@ -10,7 +11,9 @@ export class CheckCompoComponent implements OnInit {
   toppings:Array<any>=[{name:'pepper',value:'pepper'},
 {name:'turmeric', value:'turmeric'},
 {name:'redchilli', value:'redchilli'}];
-  constructor() { }
+userId;
+  constructor(private authService:AuthService) { 
+  }
   date=new FormControl(new Date());
   checkForm:FormGroup;
   ngOnInit(): void {
@@ -20,7 +23,11 @@ export class CheckCompoComponent implements OnInit {
     // console.log(date.getFullYear() +'   '+ date.getHours() +' : ' + date.getMinutes());
     this.checkForm=new FormGroup({
       'top':new FormArray([])
-    })
+    });
+   
+  }
+  getUserId(){
+    return this.userId;
   }
   onSubmit(){
 

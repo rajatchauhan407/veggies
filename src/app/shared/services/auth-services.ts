@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../models/user.model';
 const BACKEND_URL = environment.Url;
@@ -14,8 +12,15 @@ export class AuthService {
   private tokenTimer:NodeJS.Timer;
   public token: string;
   public isAuth = false;
-  public authStatusListener = new Subject<boolean>();
-
+  private userId;
+  /******************Setting User Id *******/
+  setUserId(value){
+    this.userId = value;
+  }
+  /******** Getting User Id ********/
+  getUserId(){
+    return this.userId;
+  }
   /***************Getting Token *****/
   getToken() {
     return this.token;
@@ -25,10 +30,6 @@ export class AuthService {
     const user: User = { contact: phoneNo };
     console.log(user);
     return this.http.post<User>(BACKEND_URL + '/signUp', user);
-  }
-  /* listening to the status of authentication */
-  getAuthStatusListener() {
-    return this.authStatusListener.asObservable();
   }
   /**************** Request to Login from the User ***********/
   loginService(phoneNo) {
@@ -96,18 +97,35 @@ export class AuthService {
     const now = new Date();
     const expiresIn = autoAuthInfo.expirationDate.getTime() - now.getTime(); //if the date exists in future
     console.log('Setting Auth Timer' + expiresIn);
+    
     if (expiresIn > 0) {
       this.token = autoAuthInfo.token;
       this.isAuth = true;
       this.setAuthTimer(expiresIn / 1000);
+    } else{
+      this.clearAuthData();
     }
   }
-
   /******* Otp Verification  ************/
-
   otpVerification(otp){
-    console.log(otp);
+    // console.log(otp);
     const otpSent={value:otp}
     return this.http.post<{result:boolean}>(BACKEND_URL + '/verifyOtp', otpSent);
   }
+  /*********OTP verification for signing it up ********/
+  signUpOtpVerify(otp){
+    const otpSent = {value : otp};
+    console.log(otpSent);
+    return this.http.post<{result:boolean}>(BACKEND_URL + '/verifySignOtp',otpSent);
+  }
+  /***************Get User Id ****************/
+ getId(){
+   const promise = new Promise((resolve,reject)=>{
+    this.http.get<any>(BACKEND_URL+"/getId").subscribe((res)=>{
+      console.log(res);
+      resolve(res);
+    });
+    });
+    return promise;
+ }
 }

@@ -27,7 +27,8 @@ export class OtpDialogComponent implements OnInit {
    }
    verifyOtp(){
      const promise = new Promise((resolve,reject)=>{
-      this.authService.otpVerification(this.enteredOtp.nativeElement.value).subscribe(response =>{
+       console.log(this.enteredOtp.nativeElement.value);
+      this.authService.signUpOtpVerify(this.enteredOtp.nativeElement.value).subscribe(response =>{
         console.log(response);
         resolve(response);
       },error=>{reject(error)})

@@ -1,0 +1,34 @@
+
+<mat-paginator 
+[length]="lengthPage"
+[pageSize]="postsPerPage"
+[pageSizeOptions]="pageSizeOptions"
+(page)="onChangePage($event)"
+></mat-paginator>
+<mat-card>
+    <mat-card-title>SubTotal : {{subTotal}}</mat-card-title>
+</mat-card>
+<section class="myCart" fxLayout="column" >
+    <mat-card 
+    fxLayout="row" 
+    class="cart-card"
+    fxFlex.xs="100"
+    *ngFor="let veg of vegData"
+    >
+    <div fxFlex="30" class="img-mat">
+        <img [src]="image1" alt="Tomato" >  
+    </div>
+     <mat-card-content>
+        <mat-card-header fxLayout="column">
+            <mat-card-title>{{veg.vegName}}</mat-card-title>
+        </mat-card-header>
+        <div class="price"><span><h2><i class="fa fa-inr"></i> <strong>{{veg.price}}/kg</strong> </h2></span></div>
+        <div class="price"><span><h2> <strong>Quantity:</strong> {{veg.quantity}}Kg </h2></span></div>
+        <mat-card-actions>
+            <button mat-raised-button color="accent" (click)="onRemove(veg._id)">Remove From Bucket</button>
+        </mat-card-actions>
+     </mat-card-content>
+     <hr>
+    </mat-card>
+</section>
+<button fxHide.gt-xs class="proceed-btn" color="primary" mat-raised-button (click)="openDialog()">Proceed to Confirm Order</button>

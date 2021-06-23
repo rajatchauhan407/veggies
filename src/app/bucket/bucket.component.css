@@ -1,0 +1,38 @@
+.cart-card,h2,.price,mat-card-title{font-family: 'Pangolin', cursive;}
+.cart-card{
+    padding:10px;
+}
+.myCart{
+    margin-top:10px;
+}
+mat-card-title{
+    font-weight:1000;
+}
+h2{
+    margin-bottom: 0;
+}
+.price,mat-card-actions{
+    margin-left:16px;
+}
+.img-mat img{
+    width:100%;
+    height:auto;
+}
+mat-card-actions button{
+    font-weight:1000;
+    font-size: 16px;
+}
+.proceed-btn{
+    width:100%;
+    position:sticky;
+    bottom:0;
+}
+mat-paginator{
+    position:sticky;
+    top:0;
+}
+:host ::ng-deep .mat-paginator-container{
+    padding:0px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}

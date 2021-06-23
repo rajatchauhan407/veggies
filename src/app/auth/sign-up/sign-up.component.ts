@@ -31,10 +31,11 @@ private authResponse;
       data:{
       otp:this.authResponse.otp,
       token: this.authResponse.token,
-      expiresIn: this.authResponse.expiresIn
+      expiresIn: this.authResponse.expiresIn                      
     }});
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result=>{
+      this.authService.autoAuthUser();
         this.router.navigate(['']);
     },error=>{
       console.log(error);

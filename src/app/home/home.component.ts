@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VegData } from '../shared/models/vegData.model';
+import { AuthService } from '../shared/services/auth-services';
 import { VegDataService } from '../shared/services/vegData.service';
 
 @Component({
@@ -10,11 +11,14 @@ import { VegDataService } from '../shared/services/vegData.service';
 export class HomeComponent implements OnInit {
   public tab1:string="Prices Today";
   public tab2:string="Your Orders";
- 
-  constructor(private vegDataService:VegDataService) { }
+  
+  
+  constructor(private vegDataService:VegDataService,
+    private authService:AuthService) {
+   
+     }
 
   ngOnInit(): void {
-    
     }
 
 }

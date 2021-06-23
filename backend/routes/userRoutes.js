@@ -8,7 +8,8 @@ const checkAuth= require('../middleware/auth-check');
 // Creating a user and Otp verification
 router.post("/signUp",checkUser,userController.createUser);
 router.post("/login",userController.loginUser);
-
 router.post("/verifyOtp", userController.userVerify);
+router.post("/verifySignOtp", userController.verifySignUp);
+router.get("/getId",userController.getUserId);
 module.exports=router;
 // chouhanakansha09@gmail.com

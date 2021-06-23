@@ -21,7 +21,7 @@ export class OtpLoginComponent implements OnInit {
     private router: Router,
     public dialogRef: MatDialogRef<OtpLoginComponent>,
     private authService:AuthService,
-              private http:HttpClient
+    private http:HttpClient
   ) {
     this.otp = this.passedData.otp;
   }
@@ -37,28 +37,26 @@ export class OtpLoginComponent implements OnInit {
     return promise;
   }
   beforeClosed(){
-    //  this.dialogRef.close();
-    // console.log(this.enteredOtp.nativeElement.value);
-    // console.log(this.otp);
-    let tempOtp=this.enteredOtp.nativeElement.value;
-    if(this.otp==tempOtp){
+    
+    let tempOtp = this.enteredOtp.nativeElement.value;
+    if(this.otp == tempOtp){
       this.checkOtp=true;
       const expiresInduration = this.passedData.expiresIn;
       const now = new Date();
       const expirationDate= new Date(now.getTime() + expiresInduration*1000);
-      
       this.verifyOtp().then(
-        (res:any) =>{
-          console.log(res);
+        (res:any) => {
+          
           if(res.result == true){
             this.authService.saveAuthData(this.passedData.token,expirationDate);
             this.authService.setAuthTimer(expiresInduration);
+            console.log(res);
             this.dialogRef.close();
           }
         }
       )
     }else{
-      this.checkOtp=false;
+      this.checkOtp = false;
     }
    }
   ngOnInit(): void {}

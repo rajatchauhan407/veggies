@@ -19,6 +19,8 @@ import { OtpDialogComponent } from './auth/sign-up/otp-dialog/otp-dialog.compone
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { OtpLoginComponent } from './auth/login/otp-login/otp-login.component';
 import { AuthInterceptor } from './shared/services/auth.interceptor';
+import { BucketComponent } from './bucket/bucket.component';
+import { ConfirmDialogComponent } from './bucket/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { AuthInterceptor } from './shared/services/auth.interceptor';
     ChooseQuantityPopUpComponent,
     OtpDialogComponent,
     SpinnerComponent,
-    OtpLoginComponent
+    OtpLoginComponent,
+    BucketComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,9 @@ import { AuthInterceptor } from './shared/services/auth.interceptor';
   ],
   providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}],
   bootstrap: [AppComponent],
-  entryComponents:[ChooseQuantityPopUpComponent,OtpDialogComponent]
+  entryComponents:[ChooseQuantityPopUpComponent,
+    OtpDialogComponent,
+    ConfirmDialogComponent,
+    OtpLoginComponent]
 })
 export class AppModule { }

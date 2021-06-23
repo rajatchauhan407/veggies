@@ -1,0 +1,30 @@
+<section class="dialog-table">
+    <table mat-table [dataSource]="vegData">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{element.vegName}}</td>
+            <td mat-footer-cell *matFooterCellDef> Total </td>
+        </ng-container>
+        <ng-container matColumnDef="quantity" style="text-align: center;">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">{{element.quantity }}</td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Per Kg</th>
+            <td mat-cell *matCellDef="let element">{{element.price}}</td>
+        </ng-container>
+        <ng-container matColumnDef="totalprice">
+            <th mat-header-cell *matHeaderCellDef>Total Price</th>
+            <td mat-cell *matCellDef="let element">{{element.quantity * element.price}}</td>
+            <td mat-footer-cell *matFooterCellDef> {{subTotal}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</section>
+<section class="btn-sect" fxLayout="row" fxLayoutAlign="center none">
+    <button mat-raised-button color="accent" [mat-dialog-close]="true">Cancel</button>
+    <button mat-raised-button color="primary">Confirm</button>
+</section>
+
+
