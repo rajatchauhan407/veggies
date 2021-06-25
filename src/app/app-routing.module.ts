@@ -6,12 +6,14 @@ import { CheckCompoComponent } from './learn/check-compo/check-compo.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { BucketComponent } from './bucket/bucket.component';
+import { OrdersComponent } from './orders/orders.component';
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignUpComponent},
   {path:'learn',component:CheckCompoComponent},
-  {path:'bucket',component:BucketComponent}
+  {path:'bucket',component:BucketComponent},
+  {path:'orders',component:OrdersComponent} 
 ];
 
 @NgModule({

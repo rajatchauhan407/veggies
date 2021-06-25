@@ -1,0 +1,8 @@
+<mat-paginator 
+[length]="lengthPage"
+[pageSize]="postsPerPage"
+[pageSizeOptions]="pageSizeOptions"
+(page)="onChangePage($event)"
+></mat-paginator>
+
+<button mat-raised-button color="primary" (click) = "getOrdersData()">Get Orders</button>

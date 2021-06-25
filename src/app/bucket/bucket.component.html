@@ -31,4 +31,4 @@
      <hr>
     </mat-card>
 </section>
-<button fxHide.gt-xs class="proceed-btn" color="primary" mat-raised-button (click)="openDialog()">Proceed to Confirm Order</button>
+<button fxHide.gt-xs class="proceed-btn" color="primary" mat-raised-button (click)="openDialog()" [disabled]="!subTotal">Proceed to Confirm Order</button>

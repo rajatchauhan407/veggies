@@ -37,7 +37,8 @@ export class BucketComponent implements OnInit {
        height: "auto",
        data :{
         vegData: this.vegData,
-        subTotal : this.subTotal
+        subTotal : this.subTotal,
+        userId : this.userId
        }
      }
       );
@@ -51,6 +52,7 @@ export class BucketComponent implements OnInit {
   /************Getting Bucket Data **********/
   getBucketData(){
     this.authService.getId().then((result:any) => {
+      this.userId = result.userId;
       return result.userId;
     }).then((result)=>{
     const promise =  this.vegDataService.getDataFromBucket(result,this.postsPerPage,this.currentPage);

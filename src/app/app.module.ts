@@ -21,6 +21,7 @@ import { OtpLoginComponent } from './auth/login/otp-login/otp-login.component';
 import { AuthInterceptor } from './shared/services/auth.interceptor';
 import { BucketComponent } from './bucket/bucket.component';
 import { ConfirmDialogComponent } from './bucket/confirm-dialog/confirm-dialog.component';
+import { OrdersComponent } from './orders/orders.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { ConfirmDialogComponent } from './bucket/confirm-dialog/confirm-dialog.c
     SpinnerComponent,
     OtpLoginComponent,
     BucketComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

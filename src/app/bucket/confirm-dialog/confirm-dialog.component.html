@@ -1,30 +1,36 @@
+<!-- <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field> -->
 <section class="dialog-table">
-    <table mat-table [dataSource]="vegData">
+    <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">{{element.vegName}}</td>
-            <td mat-footer-cell *matFooterCellDef> Total </td>
+            <td mat-footer-cell *matFooterCellDef class="last-row"> Total </td>
         </ng-container>
         <ng-container matColumnDef="quantity" style="text-align: center;">
             <th mat-header-cell *matHeaderCellDef>Quantity</th>
             <td mat-cell *matCellDef="let element">{{element.quantity }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef>Per Kg</th>
             <td mat-cell *matCellDef="let element">{{element.price}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
         <ng-container matColumnDef="totalprice">
             <th mat-header-cell *matHeaderCellDef>Total Price</th>
             <td mat-cell *matCellDef="let element">{{element.quantity * element.price}}</td>
-            <td mat-footer-cell *matFooterCellDef> {{subTotal}} </td>
+            <td mat-footer-cell *matFooterCellDef class="last-row">{{subTotal}}</td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
     </table>
 </section>
 <section class="btn-sect" fxLayout="row" fxLayoutAlign="center none">
     <button mat-raised-button color="accent" [mat-dialog-close]="true">Cancel</button>
-    <button mat-raised-button color="primary">Confirm</button>
+    <button mat-raised-button color="primary" (click)="confirmOrder()">Confirm</button>
+    
 </section>
-
-

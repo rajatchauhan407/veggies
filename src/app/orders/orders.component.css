@@ -1,0 +1,10 @@
+mat-paginator{
+    position:sticky;
+    top:0;
+    border-bottom: 1px solid darkgreen;
+}
+:host ::ng-deep .mat-paginator-container{
+    padding:0px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}

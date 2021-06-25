@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const generateOtp = (phoneNo) => {
   const promise = new Promise((resolve, reject) => {
     var accountSid = "ACf80221260dd9ab17e8d3b8714fc49e2e";
-    var authToken = "0510f9d5032ec7fdfbb07cba10023b6e";
+    var authToken = "e19a670efdfda81637fe3a095d8e2330";
     var twilio = require("twilio");
     var client = new twilio(accountSid, authToken);
     val = Math.floor(1000 + Math.random() * 9000);
@@ -48,7 +48,7 @@ exports.createUser = (req, res, next) => {
         },
         process.env.JWT_KEY,
         {
-          expiresIn: "1h",
+          expiresIn: "24h",
         }
       );
       return token;
@@ -56,7 +56,7 @@ exports.createUser = (req, res, next) => {
       res.status(201).json({
         otp: OTP,
         token: result,
-        expiresIn: 3600,
+        expiresIn: 3600*24,
       });
     })
     .catch((error) => {

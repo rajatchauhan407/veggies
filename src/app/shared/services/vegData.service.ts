@@ -67,5 +67,33 @@ export class VegDataService{
         });
     }
     /*****************Calculate Sub-Total of Bucket ***********/    
-
+    orderConfirmed(data,subtotal,userId){
+        const orderData={
+            order : data,
+            userId:userId,
+            orderTotal: subtotal
+        };
+        this.http.post(BACKEND_URL + "/orders/confirmOrder",orderData).subscribe((response:any)=>{
+            console.log(response);
+        })
+    }
+    /**************Get Orders *************/
+    getOrders(userId, postsPerPage, currentPage){
+        let searchParams = new HttpParams();
+        searchParams = searchParams.append('id',userId);
+        searchParams = searchParams.append('pageSize',postsPerPage);
+        searchParams = searchParams.append('currentPage',currentPage);
+        const promise = new Promise((resolve, reject)=>{
+            this.http.get<any>(BACKEND_URL + "/orders",{
+                params: searchParams
+            }).subscribe((result:any) =>{
+                console.log(result);
+                resolve(result);
+            }, error => {
+                console.log(error);
+                reject(error);
+            })
+        });
+        return promise;
+    }
 }

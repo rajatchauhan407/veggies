@@ -5,3 +5,7 @@ td,th{
 .btn-sect button{
     margin: 5px;
 }
+.last-row{
+    font-size:1.2rem;
+    font-weight: bolder;
+}

@@ -117,3 +117,62 @@ exports.bucketDelete = (req,res,next) =>{
         })
     })
 }
+/******************Confirm Order From the bucket ****************/
+exports.confirmOrder = (req, res, next) => {
+    const orderedOn = new Date();
+    const orderData= req.body.order;
+    const data = [];
+    orderData.forEach((orders)=>{
+        data.push({
+            
+            vegId:orders.vegId,
+            quantity: orders.quantity,
+            price: orders.price,
+            vegName:orders.vegName
+        });
+    });
+    const order = new Orders({
+        orderedOn: orderedOn,
+        userId: req.body.userId,
+        orderTotal: req.body.orderTotal,
+        vegetables: data
+    });
+    order.save().then(result =>{
+        res.status(201).json({
+            message: "Oder Confirmed"
+        });
+    }).catch(error => {
+        console.log(error);
+        res.status(501).json({
+            message:" An Error has occured"
+        })
+    });
+   
+};
+/**************Get Orders ************/
+exports.getOrders = (req, res, next) =>{
+    const userId = req.query.id;
+    const pageSize = +req.query.pageSize;
+    const currentPage = +req.query.currentPage;
+    const OrdersQuery = Orders.find({'userId': userId});
+    let fetchedOrders;
+    // console.log(req.query);
+    
+    if(userId && pageSize && currentPage){
+        OrdersQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    }
+    OrdersQuery.then(result => {
+            fetchedOrders = result;
+           return Orders.countDocuments({'userId': userId});
+    }).then(count =>{
+        res.status(201).json({
+            data: fetchedOrders,
+            count:count
+        })
+    }).catch(error =>{
+        res.status(501).json({
+            error:error,
+            message:"could Not resolve request"
+        })
+    });
+};
