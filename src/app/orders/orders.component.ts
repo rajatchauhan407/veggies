@@ -28,14 +28,24 @@ export class OrdersComponent implements OnInit {
         return result.userId;
       }).then(result =>{
         this.vegDataService.getOrders(result,this.postsPerPage,this.currentPage).then(
-          result =>{
+          (result:any) =>{
             console.log(result);
+            this.myOrders = result.data;
           }
         );
-      })
-      
+      }).catch(error =>{
+        console.log(error);
+      });
+  }
+  showDate(gettingDate){
+   const d:Date = new Date(gettingDate);
+   const month = d.getMonth();
+   const year = d.getFullYear();
+   const date = d.getDate();
+   return `${date}-${month+1}-${year}`;
   }
   ngOnInit(): void {
+    this.getOrdersData();
   }
 
 }

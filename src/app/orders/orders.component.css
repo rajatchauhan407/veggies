@@ -8,3 +8,36 @@ mat-paginator{
     justify-content: flex-start;
     flex-wrap: nowrap;
 }
+mat-card{
+    padding:12px;
+    border-radius: 1rem;
+    border-bottom: 3px solid darkgreen;
+    margin-bottom: 5px;
+}
+.title-row{
+    width:100%;
+    display:flex;
+    box-sizing: border-box;
+    padding:2px;
+}
+.title-bars{
+    width:50%;
+    display:flex;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: bolder;
+    padding:5px;
+    line-height: 25px;
+}
+.title-bars p{
+    margin-bottom: 0px;
+}
+.title-bars:nth-child(1) p{
+    color:darkgreen;
+}
+.title-bars button{
+    line-height: 30px;
+}
+.title-bars:nth-child(1){
+    border-right: 1px solid darkgreen;
+}

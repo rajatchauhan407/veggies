@@ -4,5 +4,24 @@
 [pageSizeOptions]="pageSizeOptions"
 (page)="onChangePage($event)"
 ></mat-paginator>
-
-<button mat-raised-button color="primary" (click) = "getOrdersData()">Get Orders</button>
+<!-- <button mat-raised-button color="primary" (click) = "getOrdersData()">Get Orders</button> -->
+<section>
+    <mat-card *ngFor="let order of myOrders">
+            <div fxLayout="row" class="title-row">
+                <div class="title-bars"><p>Ordred On</p></div>
+                <div class="title-bars"><p>{{showDate(order.orderedOn)}}</p></div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="title-row">
+                <div class="title-bars"><p>Total</p></div>
+                <div class="title-bars"><p>260</p></div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" class="title-row">
+                <div class="title-bars"><p>Bill</p></div>
+                <div class="title-bars"><button mat-raised-button color="primary">
+                    Download
+                </button></div>
+            </div>
+    </mat-card>
+</section>

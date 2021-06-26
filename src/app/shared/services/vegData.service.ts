@@ -87,7 +87,7 @@ export class VegDataService{
             this.http.get<any>(BACKEND_URL + "/orders",{
                 params: searchParams
             }).subscribe((result:any) =>{
-                console.log(result);
+                // console.log(result);
                 resolve(result);
             }, error => {
                 console.log(error);
