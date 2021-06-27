@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Subject } from "rxjs";
 import { VegData } from "../models/vegData.model";
 import { Bucket } from "../models/bucket.model";
-import { AnyAaaaRecord, resolve } from "dns";
+import {tap} from "rxjs/operators";
 
 const BACKEND_URL = environment.Url;
 @Injectable({
@@ -12,6 +12,7 @@ const BACKEND_URL = environment.Url;
 })
 export class VegDataService{
    private vegData:VegData;
+   contents;
    bucketDataEmitter = new Subject<Bucket>();
     constructor(private http:HttpClient){}
 /**************Getting Veg Data *******/    
@@ -96,4 +97,24 @@ export class VegDataService{
         });
         return promise;
     }
+    /****************Get Invoice for orders *******/
+    getInvoice(orderId,userId):any{
+        const promise =new Promise((resolve,reject)=>{
+            let searchParams = new HttpParams();
+        searchParams = searchParams.append('orderId',orderId);
+        searchParams = searchParams.append('userId',userId);
+        this.http.get(BACKEND_URL + "/orders/getInvoice",{
+            params:searchParams,
+            responseType:"blob"
+        }).pipe(tap(data => {})).subscribe((result:any) =>{
+            this.contents = result;
+            resolve(this.contents);
+            console.log(this.contents);
+        },error => {
+            console.log(error);
+        });
+        });
+        return promise;
+    }
 }
+

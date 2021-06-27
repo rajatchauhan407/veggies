@@ -1,7 +1,11 @@
 const Vege = require('../models/vege');
 const Bucket = require('../models/bucket');
 const Orders = require('../models/orders');
+const fs = require('fs');
+const path = require('path');
+const PDFDocument = require('pdfkit');
 const url = require('url');
+
 /***************Adding Prices to the menu of vegetable*******/
 exports.prices = (req,res,next)=>{
  const vege = new Vege({
@@ -156,8 +160,6 @@ exports.getOrders = (req, res, next) =>{
     const currentPage = +req.query.currentPage;
     const OrdersQuery = Orders.find({'userId': userId});
     let fetchedOrders;
-    // console.log(req.query);
-    
     if(userId && pageSize && currentPage){
         OrdersQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
     }
@@ -174,5 +176,30 @@ exports.getOrders = (req, res, next) =>{
             error:error,
             message:"could Not resolve request"
         })
+    });
+};
+/**************Getting an invoice for the order ***********/
+exports.getInvoice = (req, res, next)=>{
+    const orderId = req.query.orderId;
+    Orders.findById(orderId).then(order =>{
+        if(!order){
+            res.status(501).json({
+                errorMessage: "Order Does Not exist"
+            })
+        }
+        const invoiceName = 'invoice-' + orderId + '.pdf';
+        const invoicePath = path.join('data','invoices',invoiceName);
+        const pdfDoc = new PDFDocument();
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader(
+            'Content-Disposition',
+            'attachement;filename="'+ invoiceName +'"'
+        );
+        pdfDoc.pipe(fs.createWriteStream(invoicePath));
+        pdfDoc.pipe(res);
+        pdfDoc.text('Hello World!');
+        pdfDoc.end();
+    }).catch(error =>{
+        console.log(error);
     });
 };

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from '../shared/services/auth-services';
 import { VegDataService } from '../shared/services/vegData.service';
-
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'install-orders',
   templateUrl: './orders.component.html',
@@ -15,12 +15,14 @@ export class OrdersComponent implements OnInit {
   pageSizeOptions=[2,3,6,9];
   userId;
   myOrders;
+  invoiceURL:string;
   constructor(private vegDataService:VegDataService,
     private authService:AuthService) { }
   /*****Changing Page through pagination */  
   onChangePage(pageEvent : PageEvent){
     this.postsPerPage = pageEvent.pageSize;
     this.currentPage = pageEvent.pageIndex +1;
+    this.getOrdersData();
   }
   getOrdersData(){
       this.authService.getId().then((result:any) =>{
@@ -43,6 +45,19 @@ export class OrdersComponent implements OnInit {
    const year = d.getFullYear();
    const date = d.getDate();
    return `${date}-${month+1}-${year}`;
+  }
+  getInvoice(orderId){
+    this.vegDataService.getInvoice(orderId,this.userId).then((result)=>{
+      let blob = new Blob([result], { 
+        type: 'application/pdf' // must match the Accept type
+     });
+     this.invoiceURL = URL.createObjectURL(blob);
+    //  window.open(this.invoiceURL);
+    let filename = 'invoice.pdf';
+    FileSaver.saveAs(blob, filename);
+    });
+
+    // return this.invoice;
   }
   ngOnInit(): void {
     this.getOrdersData();

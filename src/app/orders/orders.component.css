@@ -11,7 +11,7 @@ mat-paginator{
 mat-card{
     padding:12px;
     border-radius: 1rem;
-    border-bottom: 3px solid darkgreen;
+    box-shadow: 1rem darkgreen;
     margin-bottom: 5px;
 }
 .title-row{

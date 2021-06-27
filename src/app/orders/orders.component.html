@@ -14,12 +14,16 @@
             <mat-divider></mat-divider>
             <div fxLayout="row" class="title-row">
                 <div class="title-bars"><p>Total</p></div>
-                <div class="title-bars"><p>260</p></div>
+                <div class="title-bars"><p>{{order.orderTotal}}</p></div>
             </div>
             <mat-divider></mat-divider>
             <div fxLayout="row" class="title-row">
                 <div class="title-bars"><p>Bill</p></div>
-                <div class="title-bars"><button mat-raised-button color="primary">
+                <div class="title-bars"><button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="getInvoice(order._id)"
+                    download>
                     Download
                 </button></div>
             </div>
