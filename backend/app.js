@@ -3,12 +3,13 @@ const express=require('express');
 const app= express();
 const userRoutes= require('./routes/userRoutes');
 const vegRoutes= require('./routes/vegRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const mongoose = require('mongoose');
 // const mongoConnect = require('./util/database').mongoConnect;
 // mongoConnect();
 mongoose.connect('mongodb+srv://rajat_veggi1304:' + process.env.MONGO_ATLAS_PW + '@veggies.znzgp.mongodb.net/users?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true}).then(
     result=>{
-        console.log("connected");
+        console.log("Users connected");
     }
 ).catch(error=>{
     console.log(error);
@@ -25,6 +26,7 @@ app.use((req,res,next)=>{
 
 app.use(userRoutes);
 app.use(vegRoutes);
+app.use(adminRoutes);
 
 // app.listen(3000);
 module.exports=app;

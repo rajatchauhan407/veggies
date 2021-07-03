@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from '../shared/services/auth-services';
 import { VegDataService } from '../shared/services/vegData.service';
+import { HightlightDirective } from '../directive/hightlight.directive';
 import * as FileSaver from 'file-saver';
 @Component({
   selector: 'install-orders',
@@ -16,6 +17,7 @@ export class OrdersComponent implements OnInit {
   userId;
   myOrders;
   invoiceURL:string;
+  blob;
   constructor(private vegDataService:VegDataService,
     private authService:AuthService) { }
   /*****Changing Page through pagination */  
@@ -46,17 +48,20 @@ export class OrdersComponent implements OnInit {
    const date = d.getDate();
    return `${date}-${month+1}-${year}`;
   }
-  getInvoice(orderId){
+    getInvoice(orderId){
+      
     this.vegDataService.getInvoice(orderId,this.userId).then((result)=>{
       let blob = new Blob([result], { 
         type: 'application/pdf' // must match the Accept type
      });
      this.invoiceURL = URL.createObjectURL(blob);
-    //  window.open(this.invoiceURL);
-    let filename = 'invoice.pdf';
-    FileSaver.saveAs(blob, filename);
+      window.open(this.invoiceURL);
+      //Reading the data of the blob
+      
+    // let filename = 'invoice.pdf';
+    // FileSaver.saveAs(blob, filename);
     });
-
+   
     // return this.invoice;
   }
   ngOnInit(): void {

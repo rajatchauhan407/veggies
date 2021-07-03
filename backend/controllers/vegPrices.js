@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
 const url = require('url');
+const doc = require('pdfkit');
 
 /***************Adding Prices to the menu of vegetable*******/
 exports.prices = (req,res,next)=>{
@@ -185,20 +186,50 @@ exports.getInvoice = (req, res, next)=>{
         if(!order){
             res.status(501).json({
                 errorMessage: "Order Does Not exist"
-            })
+            });
         }
         const invoiceName = 'invoice-' + orderId + '.pdf';
-        const invoicePath = path.join('data','invoices',invoiceName);
-        const pdfDoc = new PDFDocument();
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader(
-            'Content-Disposition',
-            'attachement;filename="'+ invoiceName +'"'
-        );
-        pdfDoc.pipe(fs.createWriteStream(invoicePath));
-        pdfDoc.pipe(res);
-        pdfDoc.text('Hello World!');
-        pdfDoc.end();
+            const invoicePath = path.join('data',invoiceName);
+            const pdfDoc = new PDFDocument();
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader(
+                'Content-Disposition',
+                'attachement;filename="'+ invoiceName +'"'
+            );
+            pdfDoc.pipe(fs.createWriteStream(invoicePath));
+            pdfDoc.pipe(res);
+            pdfDoc.text(`Order Id: ${orderId}`,25,25);
+            pdfDoc.fontSize(16);
+            pdfDoc.text('Invoice For Veggies',50,70,{
+                align:'center',
+                underline:'true'
+            });
+            pdfDoc.moveDown();
+            // pdfDoc.moveTo(50,150).
+            // lineTo(550,150);
+            let y=150;
+            pdfDoc.font('Times-Bold').fontSize(14).text('ITEM',50,y-25)
+            .text('Quantity',250,y-25)
+            .text('Price', 350, y-25)
+            .text('Total Cost',450,y-25);
+            pdfDoc.moveTo(50,y-5).lineTo(550,y-5);
+            order.vegetables.forEach(vegData =>{
+                pdfDoc.moveTo(50,y+20).lineTo(550,y+20);
+                pdfDoc.font('Times-Roman').fontSize(14).text(
+                 vegData.vegName,50,y
+                )
+                .text(vegData.quantity,250,y)
+                .text(vegData.price,350,y)
+                .text(vegData.quantity * vegData.price, 450, y);
+                y +=30;
+                pdfDoc.moveDown(); 
+            });
+            pdfDoc.font('Times-Bold').fontSize(14).text('Total',50,y,{
+
+            }).text(order.orderTotal,450,y);
+            pdfDoc.polygon([20, 20], [590, 20], [590,760],[20, 760]);
+            pdfDoc.stroke();
+            pdfDoc.end();
     }).catch(error =>{
         console.log(error);
     });

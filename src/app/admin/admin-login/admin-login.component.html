@@ -1,0 +1,48 @@
+<div fxLayout="column" fxLayoutAlign="none center" *ngIf="isLoading">
+    <install-spinner></install-spinner>
+  </div>
+  <section fxLayout="column" fxLayoutAlign="none center" class="login" *ngIf="!isLoading">
+    <form
+      [formGroup]="signIn"
+      (ngSubmit)="onSubmit()"
+      fxLayout="column"
+      fxLayoutAlign="none center"
+    >
+      <mat-form-field class="sign-up-form" installHightlight>
+        <input
+          matInput
+          type="input"
+          placeholder="Enter Email"
+          formControlName="email"
+          
+        />
+        <mat-error>
+          Please Enter valid email</mat-error>
+      <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="sign-up-form">
+        <input
+          matInput
+          type="password"
+          placeholder="Enter password"
+          formControlName="password"
+          id="password"
+          #password
+        />
+        <mat-error *ngIf="(!signIn.valid && signIn.get('password').touched) || (signIn.get('password').value=='' && signIn.get('password').touched )">
+            Please Enter Password</mat-error>
+      <mat-icon matSuffix (click)="togglePassword(password)">password</mat-icon>
+      </mat-form-field>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!signIn.valid"
+      >
+        Login
+      </button>
+    </form>
+  </section>
+  
+        
+    

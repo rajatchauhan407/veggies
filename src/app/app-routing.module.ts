@@ -7,13 +7,20 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { BucketComponent } from './bucket/bucket.component';
 import { OrdersComponent } from './orders/orders.component';
+import { AdminComponent } from './admin/admin.component';
+import { UpdatePricesComponent } from './admin/update-prices/update-prices.component';
+import { AddVegeComponent } from './admin/add-vege/add-vege.component';
+
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignUpComponent},
   {path:'learn',component:CheckCompoComponent},
   {path:'bucket',component:BucketComponent},
-  {path:'orders',component:OrdersComponent} 
+  {path:'orders',component:OrdersComponent},
+  {path:'admin',component:AdminComponent},
+  {path:'admin/update-prices',component:UpdatePricesComponent},
+  {path:'admin/add-vege', component:AddVegeComponent}
 ];
 
 @NgModule({

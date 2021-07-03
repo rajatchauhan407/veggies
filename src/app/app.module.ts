@@ -22,6 +22,11 @@ import { AuthInterceptor } from './shared/services/auth.interceptor';
 import { BucketComponent } from './bucket/bucket.component';
 import { ConfirmDialogComponent } from './bucket/confirm-dialog/confirm-dialog.component';
 import { OrdersComponent } from './orders/orders.component';
+import { AdminComponent } from './admin/admin.component';
+import { UpdatePricesComponent } from './admin/update-prices/update-prices.component';
+import { HightlightDirective } from './directive/hightlight.directive';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
+import { AddVegeComponent } from './admin/add-vege/add-vege.component';
 
 
 @NgModule({
@@ -40,7 +45,12 @@ import { OrdersComponent } from './orders/orders.component';
     OtpLoginComponent,
     BucketComponent,
     ConfirmDialogComponent,
-    OrdersComponent
+    OrdersComponent,
+    AdminComponent,
+    UpdatePricesComponent,
+    HightlightDirective,
+    AdminLoginComponent,
+    AddVegeComponent
   ],
   imports: [
     BrowserModule,

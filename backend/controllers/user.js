@@ -1,5 +1,8 @@
 const User = require("../models/user");
+const Admin = require("../models/admin");
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
+
 // creating the user and otp verification
 
 const generateOtp = (phoneNo) => {
@@ -172,3 +175,4 @@ exports.getUserId = (req,res,next)=>{
     })
 }
 };
+

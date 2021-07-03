@@ -1,0 +1,10 @@
+.vege-form{
+    width:100%;
+}
+mat-form-field{
+    width:90%;
+}
+.heading h1{
+    font-family: 'Pangolin', cursive;
+    margin:0;
+}

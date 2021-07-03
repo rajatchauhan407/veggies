@@ -41,3 +41,9 @@ mat-card{
 .title-bars:nth-child(1){
     border-right: 1px solid darkgreen;
 }
+.directiveClass{
+    box-sizing: border-box;
+    padding:5px;
+    border-radius:3px;
+    background-color: green;
+}
