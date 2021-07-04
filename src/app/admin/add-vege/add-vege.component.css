@@ -3,8 +3,12 @@
 }
 mat-form-field{
     width:90%;
+    font-weight: 1000;
 }
 .heading h1{
     font-family: 'Pangolin', cursive;
     margin:0;
+}
+input[type=file]{
+    visibility:hidden;
 }

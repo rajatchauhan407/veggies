@@ -16,6 +16,25 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatDividerModule} from '@angular/material/divider';
+import { LyImageCropperModule } from "@alyle/ui/image-cropper";
+import { LySliderModule } from '@alyle/ui/slider';
+import { LyButtonModule } from '@alyle/ui/button';
+import { LyIconModule } from '@alyle/ui/icon';
+import { LyDialogModule } from '@alyle/ui/dialog';
+import {
+        HAMMER_GESTURE_CONFIG,
+        HammerModule
+      } from '@angular/platform-browser';
+      
+      /** Import Alyle UI */
+      import {
+        LyTheme2,
+        StyleRenderer,
+        LY_THEME,
+        LY_THEME_NAME,
+        LyHammerGestureConfig
+      } from '@alyle/ui';
+      import { MinimaLight, MinimaDark } from '@alyle/ui/themes/minima';
 @NgModule({
     imports:[MatButtonModule,
              MatIconModule,
@@ -33,7 +52,12 @@ import {MatDividerModule} from '@angular/material/divider';
             MatSelectModule,
             MatPaginatorModule,
             MatTableModule,
-            MatDividerModule
+            MatDividerModule,
+            LyImageCropperModule,
+    LySliderModule,
+    LyButtonModule,
+    LyIconModule,
+    LyDialogModule
             ],
     exports:[MatButtonModule,
             MatIconModule,
@@ -50,8 +74,24 @@ import {MatDividerModule} from '@angular/material/divider';
             MatSelectModule,
             MatPaginatorModule,
             MatTableModule,
-            MatDividerModule
-            ]
+            MatDividerModule,
+            LyImageCropperModule,
+    LySliderModule,
+    LyButtonModule,
+    LyIconModule,
+    LyDialogModule
+            ],
+            providers: [
+                [ LyTheme2 ],
+                [ StyleRenderer ],
+                // Theme that will be applied to this module
+                { provide: LY_THEME_NAME, useValue: 'minima-light' },
+                { provide: LY_THEME, useClass: MinimaLight, multi: true }, // name: `minima-light`
+                { provide: LY_THEME, useClass: MinimaDark, multi: true }, // name: `minima-dark`
+                // Gestures
+                { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig }
+              ]
+
 })
 export class MaterialModule{
 

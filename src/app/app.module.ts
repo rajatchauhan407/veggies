@@ -27,6 +27,7 @@ import { UpdatePricesComponent } from './admin/update-prices/update-prices.compo
 import { HightlightDirective } from './directive/hightlight.directive';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AddVegeComponent } from './admin/add-vege/add-vege.component';
+import { CropperDialogComponent } from './admin/add-vege/cropper-dialog/cropper-dialog.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { AddVegeComponent } from './admin/add-vege/add-vege.component';
     UpdatePricesComponent,
     HightlightDirective,
     AdminLoginComponent,
-    AddVegeComponent
+    AddVegeComponent,
+    CropperDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,11 +64,13 @@ import { AddVegeComponent } from './admin/add-vege/add-vege.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}],
+  providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
+              ],
   bootstrap: [AppComponent],
   entryComponents:[ChooseQuantityPopUpComponent,
     OtpDialogComponent,
     ConfirmDialogComponent,
-    OtpLoginComponent]
+    OtpLoginComponent,
+    CropperDialogComponent]
 })
 export class AppModule { }
