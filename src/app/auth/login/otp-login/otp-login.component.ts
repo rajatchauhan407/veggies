@@ -44,6 +44,8 @@ export class OtpLoginComponent implements OnInit {
       const expiresInduration = this.passedData.expiresIn;
       const now = new Date();
       const expirationDate= new Date(now.getTime() + expiresInduration*1000);
+      // console.log(now);
+      // console.log(expirationDate);
       this.verifyOtp().then(
         (res:any) => {
           

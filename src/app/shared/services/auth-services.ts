@@ -15,7 +15,7 @@ export class AuthService {
   private userId;
   /******************Setting User Id *******/
   setUserId(value){
-    this.userId = value;
+    this.userId = value
   }
   /******** Getting User Id ********/
   getUserId(){
@@ -102,7 +102,7 @@ export class AuthService {
       this.token = autoAuthInfo.token;
       this.isAuth = true;
       this.setAuthTimer(expiresIn / 1000);
-    } else{
+      } else{
       this.clearAuthData();
     }
   }

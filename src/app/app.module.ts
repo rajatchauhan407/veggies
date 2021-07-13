@@ -28,6 +28,8 @@ import { HightlightDirective } from './directive/hightlight.directive';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AddVegeComponent } from './admin/add-vege/add-vege.component';
 import { CropperDialogComponent } from './admin/add-vege/cropper-dialog/cropper-dialog.component';
+import { LogComponent } from './log/log.component';
+import { DashBoardComponent } from './log/dash-board/dash-board.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { CropperDialogComponent } from './admin/add-vege/cropper-dialog/cropper-
     HightlightDirective,
     AdminLoginComponent,
     AddVegeComponent,
-    CropperDialogComponent
+    CropperDialogComponent,
+    LogComponent,
+    DashBoardComponent
   ],
   imports: [
     BrowserModule,

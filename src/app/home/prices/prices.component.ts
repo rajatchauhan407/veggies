@@ -1,7 +1,9 @@
 import { identifierModuleUrl } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AdminService } from 'src/app/admin/admin-services/admin.service';
 import { VegData } from 'src/app/shared/models/vegData.model';
 import { AuthService } from 'src/app/shared/services/auth-services';
 import { ProdcutService } from 'src/app/shared/services/productService';
@@ -17,12 +19,16 @@ export class PricesComponent implements OnInit, OnDestroy {
   public vegData:any;
   authIdSub:Subscription;
   public userId;
-  image:string="https://thumbs-prod.si-cdn.com/4mx7KqwcaknXaWkTxS1Bt-Rqz9E=/fit-in/1600x0/https://public-media.si-cdn.com/filer/44/de/44de0f61-47cb-4289-aaf0-73e71d39fefb/2962762666_1237ff6eb4_o.jpg";
+  image:string;
+  public isAdmin:boolean = false;
    public responseData=[];
   
   constructor(private dialogue:MatDialog,
      private vegDataService:VegDataService,
-     private authService:AuthService) {
+     private authService:AuthService,
+     private route: ActivatedRoute,
+     private adminService:AdminService,
+     private router:Router) {
      
    }
   ngOnDestroy(): void {
@@ -31,27 +37,46 @@ export class PricesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log("Hello");
-    this.vegDataService.vegDataRes().then((response:any)=>{
-      console.log(response);
-      this.vegData = response.response;
-      this.userId = response.userId;
-      this.authService.setUserId(this.userId);
-      console.log(this.userId);
-    }).catch(error=>{
-      console.log(error);
+    this.route.url.subscribe(result => {
+      console.log(result[1]);
+      if(result[0].path == 'admin'){
+        this.isAdmin = true;
+      }
     });
-
+    if(this.isAdmin){
+      this.adminService.getPrices().then(
+        (response:any) =>{
+          console.log(response);
+          this.vegData = response.response;
+        this.userId = response.userId;
+        this.authService.setUserId(this.userId);
+         console.log(this.userId);
+        }
+      )
+    }else {
+      this.vegDataService.vegDataRes().then((response:any)=>{
+        console.log(response);
+        this.vegData = response.response;
+        this.userId = response.userId;
+        this.authService.setUserId(this.userId);
+        console.log(this.userId);
+      }).catch(error=>{
+        console.log(error);
+      });
+    }
   //  console.log(this.authService.getUserId());
   }
-  
+  editVege(vegId){
+  console.log(vegId);
+  this.router.navigate(['admin/add-vege'],{queryParams:{id:vegId}});
+  }
   openDialogue(veg):void{
     const dialogRef = this.dialogue.open(ChooseQuantityPopUpComponent,{data:{
-      vegImage:this.image,
+      // vegImage:this.image,
       vegData:veg,
       userId:this.userId
     }});
     dialogRef.afterClosed().subscribe(result=>{
     });
   }
-
 }

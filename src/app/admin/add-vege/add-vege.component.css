@@ -12,3 +12,15 @@ mat-form-field{
 input[type=file]{
     visibility:hidden;
 }
+.image-vege{
+    box-sizing:border-box;
+    width:80%;
+    height:auto;
+    border-radius: 5px;
+}
+.sub-btn{
+    position:sticky;
+    width:100%;
+    bottom:0;
+    margin-top:40px;
+}

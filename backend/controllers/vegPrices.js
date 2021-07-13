@@ -46,7 +46,8 @@ exports.addVegBucket = (req,res,next)=>{
         quantity: req.body.quantity,
         price: req.body.price,
         userId: req.body.userId,
-        vegName:req.body.vegName
+        vegName:req.body.vegName,
+        imagePath:req.body.imagePath
      });
      bucket.save().then(result =>{
         res.status(200).json({
@@ -189,7 +190,7 @@ exports.getInvoice = (req, res, next)=>{
             });
         }
         const invoiceName = 'invoice-' + orderId + '.pdf';
-            const invoicePath = path.join('data',invoiceName);
+            const invoicePath = path.join('data','invoices',invoiceName);
             const pdfDoc = new PDFDocument();
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader(

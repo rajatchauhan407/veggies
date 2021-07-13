@@ -12,16 +12,18 @@
     fxLayoutAlign="center"
     *ngFor="let veg of vegData">
         <mat-card-title fxLayoutAlign="center">{{veg.vegName}}</mat-card-title>
-        <img mat-card-image [src]="image" >
+        <img mat-card-image [src]="veg.imagePath" >
         <mat-card-content fxLayoutAlign="space-between none" class="card-content">
             <div><span><h2><i class="fa fa-inr"></i> {{veg.price}} </h2></span></div>
             <div *ngIf="veg.availability"><i class="fa fa-dot-circle-o" style="font-size:32px;color:green"></i></div>
             <div *ngIf="!veg.availability"><i class="fa fa-dot-circle-o" style="font-size:32px;color:red"></i></div>
         </mat-card-content>
-        <mat-card-actions fxlayout="row">
-            <button mat-raised-button  fxFlex="100" (click)="openDialogue(veg)" type="submit" color="accent">
+        <mat-card-actions fxlayout="row" fxLayoutAlign="space-between none">
+            <button *ngIf="!isAdmin" mat-raised-button  fxFlex="100" (click)="openDialogue(veg)" type="submit" color="accent">
                 Add to bucket
             </button>
+            <button fxFlex="40" *ngIf="isAdmin" mat-raised-button color="primary" type="button" (click)="editVege(veg._id)">Edit</button>           
+            <button fxFlex="40" *ngIf="isAdmin" mat-raised-button color="accent" type="button">Delete</button>           
         </mat-card-actions>
     </mat-card> 
 </section>

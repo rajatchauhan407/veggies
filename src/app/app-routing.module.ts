@@ -10,6 +10,10 @@ import { OrdersComponent } from './orders/orders.component';
 import { AdminComponent } from './admin/admin.component';
 import { UpdatePricesComponent } from './admin/update-prices/update-prices.component';
 import { AddVegeComponent } from './admin/add-vege/add-vege.component';
+import { LogComponent } from './log/log.component'
+import { DashBoardComponent } from './log/dash-board/dash-board.component';
+import { DashGuardGuard } from './log/dash-guard.guard';
+
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -19,8 +23,11 @@ const routes: Routes = [
   {path:'bucket',component:BucketComponent},
   {path:'orders',component:OrdersComponent},
   {path:'admin',component:AdminComponent},
-  {path:'admin/update-prices',component:UpdatePricesComponent},
-  {path:'admin/add-vege', component:AddVegeComponent}
+  {path:'admin/update-prices',component:HomeComponent},
+  {path:'admin/add-vege', component:AddVegeComponent},
+  {path:'admin/add-vege/:id',component:AddVegeComponent},
+  {path: 'login2', component: LogComponent},
+  {path: 'dashboard', component: DashBoardComponent, canActivate:[DashGuardGuard]}
 ];
 
 @NgModule({

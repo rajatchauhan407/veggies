@@ -46,7 +46,7 @@ export class AdminLoginComponent implements OnInit {
       password:this.signIn.get('password').value
     }
     this.adminService.isAuthenticate(authData).then(result =>{
-      this.router.navigate(['/admin/update-prices']);
+      this.router.navigate(['/admin/add-vege']);
     });
   }
 

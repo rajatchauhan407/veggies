@@ -19,7 +19,7 @@ export class ChooseQuantityPopUpComponent implements OnInit, OnDestroy {
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
   public dialogRef: MatDialogRef<ChooseQuantityPopUpComponent>,
   private vegDataService:VegDataService) { 
-    this.image=this.data.vegImage;
+    // this.image=this.data.vegImage;
     this.vegData= this.data.vegData;
     this.userId = this.data.userId;
     console.log(this.data);
@@ -33,7 +33,8 @@ export class ChooseQuantityPopUpComponent implements OnInit, OnDestroy {
       quantity : this.selectedQuantity,
       price : this.vegData.price,
       userId : this.userId,
-      vegName : this.vegData.vegName
+      vegName : this.vegData.vegName,
+      imagePath:this.vegData.imagePath
     }
     if(this.userId){
       this.vegDataService.sendDataToBucket(bucketVeg).then(res =>{

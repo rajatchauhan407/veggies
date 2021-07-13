@@ -1,0 +1,19 @@
+
+<div style = "width: 100%"  fxLayout= "column" fxLayoutAlign = "center center">
+    <form class="example-form" [formGroup]="loginForm" (ngSubmit)= "onSubmit()"> 
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>User name</mat-label>
+          <input matInput placeholder="user name" formControlName="userName">
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Password" formControlName="password">
+        </mat-form-field>
+    <div style = "width: 100%" fxLayoutAlign = "center">
+        <button mat-raised-button color= "primary" type = "submit">Login</button>
+    </div>
+        
+      </form>
+</div>
+

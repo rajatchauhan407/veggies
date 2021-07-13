@@ -1,4 +1,4 @@
-// const path= require("path");
+ const path= require("path");
 const express=require('express');
 const app= express();
 const userRoutes= require('./routes/userRoutes');
@@ -16,6 +16,7 @@ mongoose.connect('mongodb+srv://rajat_veggi1304:' + process.env.MONGO_ATLAS_PW +
 });
 app.use(express.json({extended:false}));
 app.use(express.urlencoded({extended:false}));
+app.use('/images',express.static(path.join('backend/images')));
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin","*");
     res.setHeader("Access-Control-Allow-Headers","Origin,X-Requested-With, Content-Type, Accept,Authorization");

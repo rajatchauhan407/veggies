@@ -1,44 +1,74 @@
-<section style="margin-top:10px">
-    <div class="heading" fxLayout="column" fxLayoutAlign="center center">
-        <h1>Add Vegetables</h1>
-        <div style="height:2px;width:90%;background-color: darkgreen;"></div>
-    </div>
-</section>
 
-<section style="margin-top:10px"> 
-        <form>
-            <div class="vege-form" fxLayout="column" fxLayoutAlign="center center">
-            <mat-form-field appearance="fill">
-                <mat-label>Vegetable</mat-label>
-                <input 
-                matInput 
-                placeholder="Food" 
-                type="text">
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Price</mat-label>
-                <input 
-                matInput 
-                placeholder="Food" 
-                type="number">
-            </mat-form-field>
-            <div style="width:90%">
-                <button mat-raised-button type="button" color="primary" (click)="filePicker.click()" >Pick Image</button>
-                <input 
-                type="file"
-                accept="image/png, image/jpeg, image/jpg" 
-                (change)="openCropperDialog($event)"
-                #filePicker>
-            </div>
-            <div style="width:90%">
-            <img 
-            [src]="imagePreview"
-            width="100%"
-            >
-            </div>
+<div  fxLayout="column" fxLayoutAlign="center center" *ngIf="isLoading">
+    <install-spinner ></install-spinner>
+</div>
+
+    <section style="margin-top:10px">
+        <div class="heading" fxLayout="column" fxLayoutAlign="center center">
+            <h1>Add Vegetables</h1>
+            <div style="height:2px;width:90%;background-color: darkgreen;"></div>
+        </div>
+    </section>
+    <section style="margin-top:10px" *ngIf="!isLoading"> 
+            <form [formGroup]="vegForm" (ngSubmit)="onSubmit()" >
+                <div class="vege-form" fxLayout="column" fxLayoutAlign="center center">
+                <mat-form-field appearance="fill">
+                    <mat-label>Vegetable</mat-label>
+                    <input 
+                    matInput 
+                    placeholder="Food" 
+                    type="text"
+                    formControlName="vegetable">
+                    <mat-error
+            *ngIf="
+              vegForm.get('vegetable').errors !== null &&
+              vegForm.get('vegetable').value !== ''
+            ">
+            Please Enter a string</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Price</mat-label>
+                    <input 
+                    matInput 
+                    placeholder="Food" 
+                    type="number"
+                    formControlName="price">
+                </mat-form-field>
+                <div style="width:90%">
+                    <button type="button" mat-raised-button type="button" color="accent" (click)="filePicker.click()" >Pick Image</button>
+                    <input 
+                    type="file"
+                    accept="image/png, image/jpeg, image/jpg" 
+                    (change)="openCropperDialog($event)"
+                    #filePicker
+                    >
+                </div>
+                <div style="width:90%">
+                <img 
+                [src]="cropped"
+                class="image-vege"
+                >
+                </div>
+                </div> 
+                <button 
+            *ngIf="cropped && !isAdmin" 
+            class="sub-btn" 
+            mat-raised-button
+            type="submit" 
+            color="primary"
+            [disabled]="!vegForm.valid"
+            >Submit</button>
+            <button 
+            *ngIf="cropped && isAdmin" 
+            class="sub-btn" 
+            mat-raised-button
+            type="submit" 
+            color="accent"
+            [disabled]="!vegForm.valid"
+            >Update</button>
+            </form>
             
-            </div>
-            
-        </form>
-</section>
+    </section>
+
+
 

@@ -56,14 +56,14 @@ export class CropperDialogComponent implements OnInit, WithStyles, AfterViewInit
   minScale: number;
   @ViewChild(LyImageCropper,{static:true}) cropper:LyImageCropper;
   myConfig: ImgCropperConfig = {
-    width: 150,
+    width: 200,
     height: 150,
     // type: 'image/png',
     keepAspectRatio: true,
     responsiveArea: true,
     output: {
       width: 200,
-      height: 200
+      height: 150
     },
     resizableArea: true
   };
