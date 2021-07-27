@@ -3,7 +3,8 @@ const Admin = require("../models/admin");
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto');
 const Vege = require('../models/vege');
-
+const Bucket = require('../models/bucket');
+const { ObjectId } = require("mongodb");
 /****************Admin Auth ****************/
 exports.adminAuthentication = (req, res, next) => {
     // const admin = new Admin({
@@ -47,7 +48,6 @@ exports.adminAuthentication = (req, res, next) => {
       });
   
   };
-
   /*************Add Vegetables ***********/
  exports.addVeggies = (req , res , next) =>{
    const url = req.protocol + "://" + req.get("host");
@@ -60,6 +60,7 @@ exports.adminAuthentication = (req, res, next) => {
     imagePath     : url + "/images/" + req.file.filename 
    });
    vege.save().then(result =>{
+     console.log(result);
      res.status(201).json({
        message: "New Vegetable Uploaded",
        response : result
@@ -86,3 +87,61 @@ exports.adminAuthentication = (req, res, next) => {
    });
  }
 /********************Update Prices of the Vegetabels ***********/
+exports.updatePrices = (req, res, next) =>{
+  console.log(req.body);
+  if(req.file){
+    const url = req.protocol + "://" + req.get("host");
+    Vege.updateOne({_id:req.body.id},{
+      vegetable : req.body.vegetable,
+      price: req.body.price,
+      imagePath:url + "/images/" + req.file.filename
+    }).then(result => res.status(201).json({
+      res: result
+    })).catch(error =>{
+      res.status(501).json({
+        error:error
+      })
+    });
+  }else{
+    console.log("Not a file");
+    Vege.updateOne({_id:req.body.id},{
+      vegetable : req.body.vegetable,
+      price: req.body.price,
+      imagePath:req.body.image
+    }).then(result => res.status(201).json({
+      res:result
+    }));
+  }
+}
+/**************Deleting Bucket *******/
+exports.deleteBucket = (req, res, next) => {
+  const id = req.body.id;
+  Bucket.find({'userId' : ObjectId(id)}).then(result =>{
+    if(result){
+      Bucket.deleteMany({'userId' : ObjectId(id)}).then(result => {
+        res.status(201).json({
+          message : 'Delete'
+         })
+      })
+    }
+  }).catch(error =>{
+    console.log(error);
+  });
+}
+/*********Deleting Veg by Admin ******/
+exports.deleteVeg = (req, res, next) =>{
+  const id = req.body.id;
+  Vege.findOne({'_id':id}).then(result =>{
+    if(result){
+      Vege.deleteOne({'_id' : id}).then(result =>{
+        res.status(201).json({
+          message: " VegeTable deleted"
+        });
+      })
+    }
+  }).catch(error =>{
+    res.status(501).json({
+      error : 'Something Went Wrong'
+    })
+  });
+}

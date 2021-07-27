@@ -1,30 +1,50 @@
-<mat-nav-list>
-    <a mat-list-item routerLink="/" (click)="onToggle()">
+<mat-nav-list *ngIf="!checkAdmin">
+        <a *ngIf="isAuthenticated" mat-list-item routerLink="/" (click)="onToggle()">
         <mat-icon>home</mat-icon>
         <span class="nav-caption">Home</span></a>
-        <a mat-list-item routerLink="/bucket" (click)="onToggle()">
+        <a *ngIf="isAuthenticated"mat-list-item routerLink="/bucket" (click)="onToggle()">
             <mat-icon matSuffix>shopping_cart</mat-icon>
             <span class="nav-caption">Bucket</span>
         </a>
-        <a mat-list-item routerLink="/orders" (click)="onToggle()">
+        <a *ngIf="isAuthenticated" mat-list-item routerLink="/orders" (click)="onToggle()">
             <mat-icon matSuffix>shopping_basket</mat-icon>
             <span class="nav-caption">My Orders</span>
         </a>
-        <a mat-list-item routerLink="/signup" (click)="onToggle()">
+        <a *ngIf="!isAuthenticated"mat-list-item routerLink="/signup" (click)="onToggle()">
             <mat-icon>face</mat-icon>
             <span class="nav-caption">Sign Up</span></a>
-        <a mat-list-item routerLink="/login" (click)="onToggle()">
+        <a *ngIf="!isAuthenticated" mat-list-item routerLink="/login" (click)="onToggle()">
             <mat-icon matSuffix>login</mat-icon>
             <span class="nav-caption">Login</span>
         </a>
-        <a mat-list-item routerLink="/learn" (click)="onToggle()">
+        <!-- <a mat-list-item routerLink="/learn" (click)="onToggle()">
             <mat-icon>book</mat-icon>
             <span class="nav-caption">Learn</span>
-        </a>
+        </a> -->
         <mat-list-item>
-            <button mat-icon-button (click)="logout()">
+            <button *ngIf="isAuthenticated" mat-icon-button (click)="logout();onToggle()">
                 <mat-icon>logout</mat-icon>
                 <span class="nav-caption">Logout</span>
             </button>
         </mat-list-item>
    </mat-nav-list>
+<mat-nav-list *ngIf="checkAdmin">
+        <a mat-list-item routerLink="/admin/add-vege" (click)="onToggle()">
+        <mat-icon>hdr_auto</mat-icon>
+        <span class="nav-caption">Add Vegetable</span></a>
+        <a mat-list-item routerLink="/admin/update-prices" (click)="onToggle()">
+            <mat-icon matSuffix>price_check</mat-icon>
+            <span class="nav-caption">Update Prices</span>
+        </a>
+        <!-- <a mat-list-item routerLink="/learn" (click)="onToggle()">
+            <mat-icon>book</mat-icon>
+            <span class="nav-caption">Learn</span>
+        </a> -->
+        <mat-list-item>
+            <button mat-icon-button (click)="logout();onToggle()">
+                <mat-icon>logout</mat-icon>
+                <span class="nav-caption">Logout</span>
+            </button>
+        </mat-list-item>
+   </mat-nav-list> 
+

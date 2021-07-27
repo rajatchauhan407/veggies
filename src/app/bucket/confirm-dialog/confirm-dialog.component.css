@@ -1,6 +1,6 @@
 
 td,th{
-    text-align:center;
+    text-align:start;
 }
 .btn-sect button{
     margin: 5px;
@@ -8,4 +8,10 @@ td,th{
 .last-row{
     font-size:1.2rem;
     font-weight: bolder;
+}
+.dialog-table{
+    width:100%;
+}
+table{
+    width:100%;
 }

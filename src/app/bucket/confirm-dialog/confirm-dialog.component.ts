@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatTableDataSource} from '@angular/material/table';
+import { Router } from '@angular/router';
 import { VegDataService } from 'src/app/shared/services/vegData.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class ConfirmDialogComponent implements OnInit {
   dataSource;
   constructor(@Inject(MAT_DIALOG_DATA) public passedData:any,
   public dialogRef:MatDialogRef<ConfirmDialogComponent>,
-  private vegDataService:VegDataService) { 
+  private vegDataService:VegDataService,
+  private router:Router) { 
     this.dataSource = new MatTableDataSource(passedData.vegData);
     this.vegData = passedData.vegData;
     this.subTotal = passedData.subTotal;
@@ -29,8 +31,11 @@ export class ConfirmDialogComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   confirmOrder(){
-    this.vegDataService.orderConfirmed(this.vegData,this.subTotal,this.userId);
+    this.vegDataService.orderConfirmed(this.vegData,this.subTotal,this.userId).then(result =>{
+      this.vegDataService.deleteBucket(this.userId);
+    });
     this.dialogRef.close();
+    this.router.navigate(['/']);
   }
   ngOnInit(): void {
   }

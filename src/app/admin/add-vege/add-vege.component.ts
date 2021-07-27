@@ -22,8 +22,9 @@ export class AddVegeComponent implements OnInit {
   cropped?:string;
   image:Blob;
   public isLoading:boolean= false;
-  userId:string;
+  vegId:string;
   isAdmin:boolean = false;
+  mode:string;
   @ViewChild('filePicker') fileInput:ElementRef;
     constructor( private _dialog : LyDialog,
                  private _cd : ChangeDetectorRef,
@@ -65,7 +66,8 @@ export class AddVegeComponent implements OnInit {
       return new Blob([u8arr], {type:mime});
   }
   onSubmit(){
-    this.isLoading = true;
+    if(this.mode == 'create'){
+      this.isLoading = true;
     // console.log(this.vegForm);
     this.adminService.addPrices(this.vegForm.get('vegetable').value,
     this.vegForm.get('price').value,this.image).then(result =>{
@@ -76,6 +78,13 @@ export class AddVegeComponent implements OnInit {
       this.isLoading = false;
     });
     this.isLoading = false;
+    } else if(this.mode == 'edit'){
+      this.adminService.updatePrices(this.vegForm.get('vegetable').value,
+      this.vegForm.get('price').value,this.image,this.vegId).then(result =>{
+        console.log(result);
+      });
+    }
+    
   }
   checkString(control:FormControl):{[s:string]:boolean}{
     const exp = /^[A-Za-z]+$/;
@@ -86,21 +95,31 @@ export class AddVegeComponent implements OnInit {
     return null;
   }
   ngOnInit(): void {
+    /*******If Id is there in query Params ********/
+      this.route.queryParamMap.subscribe((result) =>{
+        if(result.has("id")){
+          this.mode = 'edit';
+          this.vegId = this.route.snapshot.queryParams['id'];
+          console.log(this.vegId);
+        }else{
+          this.mode = "create";
+        }
+      });
+   /*********Initializing the Form  ********/
     this.vegForm = new FormGroup({
       'vegetable' : new FormControl('',[Validators.required,Validators.maxLength(20),this.checkString.bind(this)]),
       'price'     : new FormControl('',[Validators.required])
    });
-  this.userId = this.route.snapshot.queryParams['id'];
-  console.log(this.userId);
-  if(this.userId){
-    this.adminService.getSingleVegData(this.userId).then((res:any) =>{
+  /**********In Edit Mode, Get the Form Filled *******/
+  if(this.vegId){
+    this.adminService.getSingleVegData(this.vegId).then((res:any) =>{
       const result = res;
       this.cropped = result.response.imagePath;
+      this.image = result.response.imagePath;
       this.vegForm.setValue({vegetable :result.response.vegName,
         price : result.response.price});
       this.isAdmin = true;
     });
   }
-  
   } 
 }

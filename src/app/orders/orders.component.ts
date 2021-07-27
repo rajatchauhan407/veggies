@@ -13,7 +13,7 @@ export class OrdersComponent implements OnInit {
   lengthPage=10;
   currentPage=1;
   postsPerPage=10;
-  pageSizeOptions=[2,3,6,9];
+  pageSizeOptions=[2,3,6,10];
   userId;
   myOrders;
   invoiceURL:string;
@@ -35,6 +35,7 @@ export class OrdersComponent implements OnInit {
           (result:any) =>{
             console.log(result);
             this.myOrders = result.data;
+            this.lengthPage = result.count;
           }
         );
       }).catch(error =>{

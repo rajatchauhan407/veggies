@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { resolve } from 'dns';
 import { FlexFlowContext } from 'twilio/lib/rest/flexApi/v1/flexFlow';
 import { AuthService } from '../shared/services/auth-services';
@@ -23,7 +24,8 @@ export class BucketComponent implements OnInit {
   image1:string="https://images.unsplash.com/photo-1576856497337-4f2be24683da?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=682&q=80";
   constructor(private vegDataService:VegDataService,
               private authService : AuthService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private router:Router) { }
 
   ngOnInit(): void {
     /*******Promise Chaining  ***********/
@@ -42,6 +44,10 @@ export class BucketComponent implements OnInit {
        }
      }
       );
+
+      dialogRef.afterClosed().subscribe(result => {
+          
+      });
   }
   /*****Changing Page through pagination */  
   onChangePage(pageEvent : PageEvent){

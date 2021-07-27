@@ -50,9 +50,12 @@ export class OtpLoginComponent implements OnInit {
         (res:any) => {
           
           if(res.result == true){
+            // this.authService.isAuth = true;
             this.authService.saveAuthData(this.passedData.token,expirationDate);
             this.authService.setAuthTimer(expiresInduration);
             console.log(res);
+             this.authService.authSub.next(true);
+            
             this.dialogRef.close();
           }
         }

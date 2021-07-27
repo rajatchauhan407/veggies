@@ -1,5 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { AdminService } from 'src/app/admin/admin-services/admin.service';
 import { environment } from '../../../environments/environment';
 import { User } from '../models/user.model';
 const BACKEND_URL = environment.Url;
@@ -8,11 +11,13 @@ const BACKEND_URL = environment.Url;
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
-  private tokenTimer:NodeJS.Timer;
+  constructor(private http: HttpClient,
+    private router:Router) {}
+   tokenTimer:NodeJS.Timer;
   public token: string;
   public isAuth = false;
   private userId;
+   authSub = new Subject<boolean>();
   /******************Setting User Id *******/
   setUserId(value){
     this.userId = value
@@ -50,6 +55,10 @@ export class AuthService {
   getIsAuth() {
     return this.isAuth;
   }
+  // Get Auth Subject 
+  getAuthSub(){
+    return this.authSub.asObservable();
+  }
   //saving data in local storage
   saveAuthData(token: string, expirationDate: Date) {
     localStorage.setItem('token', token);
@@ -59,6 +68,9 @@ export class AuthService {
   clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
+    if(localStorage.getItem('id')){
+      localStorage.removeItem('id');
+    }
   }
   //setting the authentication Timer
   setAuthTimer(duration: number) {
@@ -71,6 +83,7 @@ export class AuthService {
     this.token = null;
     this.clearAuthData();
     clearTimeout(this.tokenTimer);
+    this.router.navigate(['/login']);
   }
   // Getting the auth data from localstorage
   getAuthData() {
@@ -101,6 +114,7 @@ export class AuthService {
     if (expiresIn > 0) {
       this.token = autoAuthInfo.token;
       this.isAuth = true;
+      // this.adminService.isAdmin = true;
       this.setAuthTimer(expiresIn / 1000);
       } else{
       this.clearAuthData();

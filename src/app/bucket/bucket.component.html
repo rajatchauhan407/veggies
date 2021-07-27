@@ -5,8 +5,9 @@
 [pageSizeOptions]="pageSizeOptions"
 (page)="onChangePage($event)"
 ></mat-paginator>
-<mat-card>
-    <mat-card-title>SubTotal : {{subTotal}}</mat-card-title>
+<mat-card fxLayout="row">
+    <mat-card-title fxFlexAlign="center" >SubTotal : {{subTotal}}</mat-card-title>
+    <button fxFlexAlign="center" fxHide.xs fxShow.gt-xs class="proceed-btn-big-screen" color="primary" mat-raised-button (click)="openDialog()" [disabled]="!subTotal">Proceed to Confirm Order</button>
 </mat-card>
 <section class="myCart" fxLayout="column" >
     <mat-card 

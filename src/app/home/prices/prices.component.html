@@ -1,8 +1,12 @@
+    <section fxLayout="row" fxLayoutAlign="center center" *ngIf="spinner">
+        <install-spinner></install-spinner>
+    </section>
     <section 
     class="prices_container"  
     fxLayout="row wrap"  
     fxLayoutAlign="space-between" 
     fxLayoutAlign.gt-xs="space-between" 
+    *ngIf="!spinner"
     >
     <mat-card 
     tabIndex="0" 
@@ -23,7 +27,7 @@
                 Add to bucket
             </button>
             <button fxFlex="40" *ngIf="isAdmin" mat-raised-button color="primary" type="button" (click)="editVege(veg._id)">Edit</button>           
-            <button fxFlex="40" *ngIf="isAdmin" mat-raised-button color="accent" type="button">Delete</button>           
+            <button fxFlex="40" *ngIf="isAdmin" mat-raised-button color="accent" type="button" (click)="onDelete(veg._id)">Delete</button>           
         </mat-card-actions>
     </mat-card> 
 </section>

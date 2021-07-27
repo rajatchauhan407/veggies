@@ -3,7 +3,7 @@ a{
     color:white;
 }
 a:hover{
-    color:grey;
+    color:greenyellow;
 }
 .navigation-items li{
     list-style:none;
@@ -14,4 +14,7 @@ mat-toolbar{
     position:sticky;
     z-index: 5;
     top : 0;
+}
+ul{
+    margin-top:1rem;
 }

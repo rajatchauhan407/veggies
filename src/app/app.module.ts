@@ -30,6 +30,9 @@ import { AddVegeComponent } from './admin/add-vege/add-vege.component';
 import { CropperDialogComponent } from './admin/add-vege/cropper-dialog/cropper-dialog.component';
 import { LogComponent } from './log/log.component';
 import { DashBoardComponent } from './log/dash-board/dash-board.component';
+import { AdminService } from './admin/admin-services/admin.service';
+import { AuthService } from './shared/services/auth-services';
+import { CheckDeliveryComponent } from './check-delivery/check-delivery.component';
 
 
 @NgModule({
@@ -56,7 +59,8 @@ import { DashBoardComponent } from './log/dash-board/dash-board.component';
     AddVegeComponent,
     CropperDialogComponent,
     LogComponent,
-    DashBoardComponent
+    DashBoardComponent,
+    CheckDeliveryComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,7 @@ import { DashBoardComponent } from './log/dash-board/dash-board.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true},
+  providers: [{provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}
               ],
   bootstrap: [AppComponent],
   entryComponents:[ChooseQuantityPopUpComponent,

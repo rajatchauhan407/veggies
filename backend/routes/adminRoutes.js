@@ -29,4 +29,11 @@ router.get("/admin-prices",adminCheck,vegController.getPrices);
 router.post("/addVeggies",multer({storage:storage}).single("image") ,adminController.addVeggies);
 
 router.get("/getSingleVeg", adminController.getSingleVeg);
+
+router.post("/updatePrices",multer({storage : storage}).single("image"), adminController.updatePrices);
+
+router.post("/delete-bucket",adminController.deleteBucket);
+
+router.post("/delete-veg",adminController.deleteVeg);
+
 module.exports=router;

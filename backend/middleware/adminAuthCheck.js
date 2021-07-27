@@ -9,7 +9,7 @@ module.exports= (req,res,next)=>{
         Admin.findOne({
             'email': email
         }).then((result) => {
-            // console.log(result);
+             console.log(result);
            res.locals.userId = result._id.toString();
         //    console.log(res.locals.userId + "hello");
         next();

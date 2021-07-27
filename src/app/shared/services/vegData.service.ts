@@ -74,9 +74,13 @@ export class VegDataService{
             userId:userId,
             orderTotal: subtotal
         };
-        this.http.post(BACKEND_URL + "/orders/confirmOrder",orderData).subscribe((response:any)=>{
-            console.log(response);
-        })
+        const promise = new Promise((resolve, reject) =>{
+            this.http.post(BACKEND_URL + "/orders/confirmOrder",orderData).subscribe((response:any)=>{
+                console.log(response);
+                resolve(response);
+            });
+        });
+        return promise;
     }
     /**************Get Orders *************/
     getOrders(userId, postsPerPage, currentPage){
@@ -116,5 +120,14 @@ export class VegDataService{
         });
         return promise;
     }
+/************** Deleting Bucket After Order **********/
+deleteBucket(id){
+    const data = {
+        'id' : id
+    }
+    this.http.post(BACKEND_URL + "/delete-bucket",data).subscribe(result =>{
+            console.log(result);
+    });
+}
 }
 

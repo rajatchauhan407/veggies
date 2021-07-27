@@ -160,13 +160,14 @@ exports.getOrders = (req, res, next) =>{
     const userId = req.query.id;
     const pageSize = +req.query.pageSize;
     const currentPage = +req.query.currentPage;
-    const OrdersQuery = Orders.find({'userId': userId});
+    const OrdersQuery = Orders.find({'userId': userId}).sort([['orderedOn', -1]]);
     let fetchedOrders;
     if(userId && pageSize && currentPage){
         OrdersQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
     }
     OrdersQuery.then(result => {
             fetchedOrders = result;
+            // fetchedOrders.skip(5);
            return Orders.countDocuments({'userId': userId});
     }).then(count =>{
         res.status(201).json({

@@ -3,15 +3,24 @@
         <mat-icon>menu</mat-icon>
     </button></div>
     <div><a routerLink="/">AFresh</a></div>
-    <div fxFlex fxLayout="row"  fxLayoutAlign="end none" fxHide.xs>
+    <div fxFlex fxLayout="row"  fxLayoutAlign="end none" fxHide.xs *ngIf="!checkAdmin">
         <ul fxLayout="row" fxLayoutGap="10px" class="navigation-items">
-            <li><a routerLink="/signup">Sign Up</a></li>
-            <li><a routerLink="/login">Sign In</a></li>
-            <li><a routerLink="/learn">Veggies</a></li>
-            <li fxLayout="row"><a routerLink="/bucket">Bucket
-            <mat-icon fxFlex fxAlign="baseline" color="accent">add_shopping_cart</mat-icon>
+            <li *ngIf="isAuthenticated"><a routerLink="/">Vegetables</a></li>
+            <li *ngIf="!isAuthenticated"><a routerLink="/signup">Sign Up</a></li>
+            <li *ngIf="!isAuthenticated"><a routerLink="/login">Sign In</a></li>
+            <li *ngIf="isAuthenticated"><a routerLink="/orders">My Orders</a></li>
+            <li *ngIf="isAuthenticated" fxLayout="row"><a routerLink="/bucket">Bucket
+            <!-- <mat-icon fxFlex fxAlign="baseline" color="accent">add_shopping_cart</mat-icon> -->
             </a>          
             </li>
+            <li *ngIf="isAuthenticated"><a routerLink="" (click)="onLogout()">Logout</a></li>
+        </ul>
+    </div>
+    <div fxFlex fxLayout="row"  fxLayoutAlign="end none" fxHide.xs *ngIf="checkAdmin">
+        <ul fxLayout="row" fxLayoutGap="10px" class="navigation-items">
+            <li><a routerLink="/admin/add-vege">Add Vegetable</a></li>
+            <li><a routerLink="/admin/update-prices">Update Prices</a></li>
+            <li><a routerLink="" (click)="onLogout()">Logout</a></li>
         </ul>
     </div>
 </mat-toolbar>

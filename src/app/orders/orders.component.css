@@ -1,3 +1,4 @@
+
 mat-paginator{
     position:sticky;
     top:0;
@@ -13,6 +14,7 @@ mat-card{
     border-radius: 1rem;
     box-shadow: 1rem darkgreen;
     margin-bottom: 5px;
+    font-family: 'Pangolin', cursive;
 }
 .title-row{
     width:100%;
@@ -45,5 +47,5 @@ mat-card{
     box-sizing: border-box;
     padding:5px;
     border-radius:3px;
-    background-color: green;
+    /* background-color: green; */
 }

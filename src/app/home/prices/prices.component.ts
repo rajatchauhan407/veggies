@@ -20,6 +20,7 @@ export class PricesComponent implements OnInit, OnDestroy {
   authIdSub:Subscription;
   public userId;
   image:string;
+  spinner:boolean = false;
   public isAdmin:boolean = false;
    public responseData=[];
   
@@ -38,33 +39,47 @@ export class PricesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log("Hello");
     this.route.url.subscribe(result => {
-      console.log(result[1]);
+      // console.log(result[1]);
       if(result[0].path == 'admin'){
         this.isAdmin = true;
+        this.adminService.setCheckAdmin(true);
+        console.log(this.isAdmin);
       }
     });
+    console.log(this.isAdmin);
     if(this.isAdmin){
-      this.adminService.getPrices().then(
-        (response:any) =>{
-          console.log(response);
-          this.vegData = response.response;
-        this.userId = response.userId;
-        this.authService.setUserId(this.userId);
-         console.log(this.userId);
-        }
-      )
+      this.getAdminPrices();
     }else {
-      this.vegDataService.vegDataRes().then((response:any)=>{
-        console.log(response);
-        this.vegData = response.response;
-        this.userId = response.userId;
-        this.authService.setUserId(this.userId);
-        console.log(this.userId);
-      }).catch(error=>{
-        console.log(error);
-      });
+      this.getUserPrices();
     }
   //  console.log(this.authService.getUserId());
+  }
+  getAdminPrices(){
+    this.spinner = true;
+    this.adminService.getPrices().then(
+      (response:any) =>{
+      console.log(response);
+      this.vegData = response.response;
+      this.userId = response.userId;
+      this.spinner = false;
+      this.authService.setUserId(this.userId);
+       console.log(this.userId);
+      }
+    );
+  }
+
+  getUserPrices(){
+    this.spinner = true;
+    this.vegDataService.vegDataRes().then((response:any)=>{
+      console.log(response);
+      this.vegData = response.response;
+      this.userId = response.userId;
+      this.spinner = false;
+      this.authService.setUserId(this.userId);
+      console.log(this.userId);
+    }).catch(error=>{
+      console.log(error);
+    });
   }
   editVege(vegId){
   console.log(vegId);
@@ -77,6 +92,12 @@ export class PricesComponent implements OnInit, OnDestroy {
       userId:this.userId
     }});
     dialogRef.afterClosed().subscribe(result=>{
+    });
+  }
+  onDelete(id){
+    this.adminService.deleteVeg(id).then(result => {
+      console.log(result);
+      this.getAdminPrices();
     });
   }
 }

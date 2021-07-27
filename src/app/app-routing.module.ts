@@ -13,26 +13,29 @@ import { AddVegeComponent } from './admin/add-vege/add-vege.component';
 import { LogComponent } from './log/log.component'
 import { DashBoardComponent } from './log/dash-board/dash-board.component';
 import { DashGuardGuard } from './log/dash-guard.guard';
+import { AdmGuard } from './admin/admin-services/adm.guard';
+import { CheckDeliveryComponent } from './check-delivery/check-delivery.component';
 
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
+  {path:'',component:HomeComponent,canActivate:[AuthGuard]},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignUpComponent},
   {path:'learn',component:CheckCompoComponent},
-  {path:'bucket',component:BucketComponent},
-  {path:'orders',component:OrdersComponent},
+  {path:'bucket',component:BucketComponent,canActivate:[AuthGuard]},
+  {path:'orders',component:OrdersComponent,canActivate:[AuthGuard]},
   {path:'admin',component:AdminComponent},
-  {path:'admin/update-prices',component:HomeComponent},
-  {path:'admin/add-vege', component:AddVegeComponent},
-  {path:'admin/add-vege/:id',component:AddVegeComponent},
+  {path:'admin/update-prices',component:HomeComponent,canActivate:[AdmGuard]},
+  {path:'admin/add-vege', component:AddVegeComponent,canActivate:[AdmGuard]},
+  {path:'admin/add-vege/:id',component:AddVegeComponent,canActivate:[AdmGuard]},
   {path: 'login2', component: LogComponent},
-  {path: 'dashboard', component: DashBoardComponent, canActivate:[DashGuardGuard]}
+  {path: 'dashboard', component: DashBoardComponent, canActivate:[DashGuardGuard]},
+  {path:'check-delivery', component:CheckDeliveryComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers:[AuthGuard]
+  providers:[AuthGuard,AdmGuard]
 })
 export class AppRoutingModule { }
