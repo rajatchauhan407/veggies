@@ -1,13 +1,14 @@
 <section>
-    <mat-card>
+    <mat-card #get>
         <mat-card-title>
             Coordinate details
         </mat-card-title>
         <mat-card-content>
-            <p>Longitude: {{posObj.longitude}}</p>
-            <p>Latitude : {{posObj.latitude}}</p>
-            <div id="map"></div>
+            <div #map style="width:100%;height:400px" id="map"></div>
         </mat-card-content>
     </mat-card>
-
+    
 </section>
+<!-- <script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjktlWs_8N0lAg4orpoAQwCjp1g6caS4&callback=initMap">
+</script> -->

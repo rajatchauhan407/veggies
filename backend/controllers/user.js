@@ -8,7 +8,7 @@ const crypto = require('crypto');
 const generateOtp = (phoneNo) => {
   const promise = new Promise((resolve, reject) => {
     var accountSid = "ACf80221260dd9ab17e8d3b8714fc49e2e";
-    var authToken = "e19a670efdfda81637fe3a095d8e2330";
+    var authToken = "1848da0611f4fc747ccb7c011efaf9b1";
     var twilio = require("twilio");
     var client = new twilio(accountSid, authToken);
     val = Math.floor(1000 + Math.random() * 9000);
