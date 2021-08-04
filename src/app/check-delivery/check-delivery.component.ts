@@ -77,3 +77,4 @@ checkDistance(distance){
   //   })
   // }
 }
+// if script doesnt work
