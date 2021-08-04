@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  Url:"http://afresh-env-1.eba-8abpgi28.us-east-1.elasticbeanstalk.com",
+  Url:"http://localhost:3000",
   
 };
 
