@@ -1,13 +1,21 @@
 <section>
     <mat-card #get>
         <mat-card-title>
-            Coordinate details
+            Delivery Checking
         </mat-card-title>
         <mat-card-content>
-            <div #map style="width:100%;height:400px" id="map"></div>
+            <!-- <div #map style="width:100%;height:400px" id="map"></div> -->
         </mat-card-content>
+        <button mat-raised-button color="primary" (click)="checkDelivery()">Check Delivery</button>
+    </mat-card>  
+</section>
+<section *ngIf="result">
+    <mat-card>
+        <mat-card-title>Distance: {{distance}}</mat-card-title>
+        <mat-card-subtitle>
+            {{message}}
+        </mat-card-subtitle>
     </mat-card>
-    
 </section>
 <!-- <script async
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjktlWs_8N0lAg4orpoAQwCjp1g6caS4&callback=initMap">
