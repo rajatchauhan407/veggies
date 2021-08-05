@@ -4,10 +4,9 @@
 
 export const environment = {
   production: false,
-  Url:"http://afresh-env-1.eba-8abpgi28.us-east-1.elasticbeanstalk.com",
+  Url:"backend.rcveg.com",
   
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
