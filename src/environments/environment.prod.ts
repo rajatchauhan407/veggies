@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  Url:"http://backend.rcveg.com"
+  Url:"https://backend.rcveg.com"
 };
