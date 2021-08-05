@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  Url:"https://backend.rcveg.com",
+  Url:"http://backend.rcveg.com",
   
 };
 /*
