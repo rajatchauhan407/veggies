@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  Url:"https://backend.rcveg.com"
+  Url:"http://rcveg-env.eba-cpcqefym.us-east-1.elasticbeanstalk.com"
 };

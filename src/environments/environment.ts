@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  Url:"https://backend.rcveg.com",
-  
+  Url:"http://rcveg-env.eba-cpcqefym.us-east-1.elasticbeanstalk.com",
+  //http://localhost:4200/login
 };
 /*
  * For easier debugging in development mode, you can import the following file
