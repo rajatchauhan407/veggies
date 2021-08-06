@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  Url:"http://localhost:3000"
+  Url:"http://afresh-env.eba-rnqqp3ep.us-east-1.elasticbeanstalk.com/admin-prices"
 }
