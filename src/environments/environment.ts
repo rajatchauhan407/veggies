@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  Url:"http://rcveg-env.eba-cpcqefym.us-east-1.elasticbeanstalk.com",
+  Url:"https://backend.rcveg.com",
   //http://localhost:4200/login
 };
 /*
