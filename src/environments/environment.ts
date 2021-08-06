@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  Url:"https://backend.rcveg.com",
-  //http://localhost:4200/login
+  Url:"http://localhost:4200",
+  //http://localhost:4200
 };
 /*
  * For easier debugging in development mode, you can import the following file
