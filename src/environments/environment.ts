@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  Url:"http://localhost:3000",
-  //http://localhost:4200
+  Url:"https://blog.rcveg.com",
+  //http://localhost:3000
   //https://blog.rcveg.com
 };
 /*
