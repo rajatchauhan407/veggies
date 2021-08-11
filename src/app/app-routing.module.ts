@@ -18,18 +18,18 @@ import { CheckDeliveryComponent } from './check-delivery/check-delivery.componen
 
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
+  {path:'',component:HomeComponent,canActivate:[AuthGuard]},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignUpComponent},
-  {path:'learn',component:CheckCompoComponent},
+  // {path:'learn',component:CheckCompoComponent},
   {path:'bucket',component:BucketComponent,canActivate:[AuthGuard]},
   {path:'orders',component:OrdersComponent,canActivate:[AuthGuard]},
   {path:'admin',component:AdminComponent},
   {path:'admin/update-prices',component:HomeComponent,canActivate:[AdmGuard]},
   {path:'admin/add-vege', component:AddVegeComponent,canActivate:[AdmGuard]},
   {path:'admin/add-vege/:id',component:AddVegeComponent,canActivate:[AdmGuard]},
-  {path: 'login2', component: LogComponent},
-  {path: 'dashboard', component: DashBoardComponent, canActivate:[DashGuardGuard]},
+  // {path: 'login2', component: LogComponent},
+  // {path: 'dashboard', component: DashBoardComponent, canActivate:[DashGuardGuard]},
   {path:'check-delivery', component:CheckDeliveryComponent}
 ];
 
