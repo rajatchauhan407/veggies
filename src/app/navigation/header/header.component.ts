@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
       console.log(this.isAuthenticated);
     });
     this.checkAdmin = this.adminService.isAdmin;
-    console.log(this.checkAdmin);
+    // console.log(this.checkAdmin);
     this.isAdminSub = this.adminService.adminAuth.subscribe(result =>{
       this.adminService.setCheckAdmin(result);
       this.checkAdmin = this.adminService.getCheckAdmin();

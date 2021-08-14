@@ -29,14 +29,13 @@ private authResponse;
     const dialogRef = this.dialogue.open(OtpDialogComponent,{
       width:"70%",
       data:{
-      otp:this.authResponse.otp,
       token: this.authResponse.token,
       expiresIn: this.authResponse.expiresIn                      
     }});
     dialogRef.disableClose = true;
     dialogRef.afterClosed().subscribe(result=>{
       this.authService.autoAuthUser();
-        this.router.navigate(['']);
+        this.router.navigate(['/home']);
     },error=>{
       console.log(error);
     });
@@ -45,7 +44,7 @@ private authResponse;
     const promise= new Promise((resolve,reject)=>{
       this.authService.createUser(conValue).subscribe(
         response=>{
-            console.log(response);
+            // console.log(response);
             resolve(response);
         },
         error=>{

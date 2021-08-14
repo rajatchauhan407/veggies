@@ -38,7 +38,7 @@ export class VegDataService{
                     resolve(res);
                 },(error) => {
                     reject(error);
-                    console.log(error);
+                    // console.log(error);
                 });
             });
             return promise;

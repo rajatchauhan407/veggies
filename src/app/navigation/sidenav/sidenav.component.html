@@ -1,5 +1,5 @@
 <mat-nav-list *ngIf="!checkAdmin">
-        <a *ngIf="isAuthenticated" mat-list-item routerLink="/" (click)="onToggle()">
+        <a *ngIf="isAuthenticated" mat-list-item routerLink="/home" (click)="onToggle()">
         <mat-icon>home</mat-icon>
         <span class="nav-caption">Home</span></a>
         <a *ngIf="isAuthenticated"mat-list-item routerLink="/bucket" (click)="onToggle()">

@@ -13,7 +13,6 @@ import { AuthService } from 'src/app/shared/services/auth-services';
   styleUrls: ['./otp-login.component.css'],
 })
 export class OtpLoginComponent implements OnInit {
-  public otp;
   public checkOtp:boolean=true;
   @ViewChild('enteredOtp') enteredOtp:ElementRef;
   constructor(
@@ -23,12 +22,11 @@ export class OtpLoginComponent implements OnInit {
     private authService:AuthService,
     private http:HttpClient
   ) {
-    this.otp = this.passedData.otp;
+    
   }
   verifyOtp(){
     const promise = new Promise((resolve,reject)=>{
      this.authService.otpVerification(this.enteredOtp.nativeElement.value).subscribe(response =>{
-       console.log(response);
        resolve(response);
      },error=>{reject(error)})
     }).catch(error=>{
@@ -36,33 +34,24 @@ export class OtpLoginComponent implements OnInit {
     });
     return promise;
   }
-  beforeClosed(){
-    
-    let tempOtp = this.enteredOtp.nativeElement.value;
-    if(this.otp == tempOtp){
-      this.checkOtp=true;
-      const expiresInduration = this.passedData.expiresIn;
-      const now = new Date();
-      const expirationDate= new Date(now.getTime() + expiresInduration*1000);
+  beforeClosed(){ 
       // console.log(now);
       // console.log(expirationDate);
       this.verifyOtp().then(
         (res:any) => {
-          
           if(res.result == true){
             // this.authService.isAuth = true;
+            const expiresInduration = this.passedData.expiresIn;
+            const now = new Date();
+            const expirationDate= new Date(now.getTime() + expiresInduration*1000);
             this.authService.saveAuthData(this.passedData.token,expirationDate);
             this.authService.setAuthTimer(expiresInduration);
             console.log(res);
              this.authService.authSub.next(true);
-            
             this.dialogRef.close();
           }
         }
       )
-    }else{
-      this.checkOtp = false;
-    }
    }
   ngOnInit(): void {}
 }

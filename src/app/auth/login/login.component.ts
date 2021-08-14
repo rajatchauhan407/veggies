@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     const dialogRef = this.dialogue.open(OtpLoginComponent, {
       width: '70%',
       data: {
-        otp:this.authResponse.otp,
         token: this.authResponse.token,
         expiresIn: this.authResponse.expiresIn
       },
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
        
         this.authService.autoAuthUser();
         // this.authService.isAuth= true;
-        this.router.navigate(['']);
+        this.router.navigate(['/home']);
       },
       (error) => {
         this.authService.isAuth= false;
@@ -49,7 +48,7 @@ export class LoginComponent implements OnInit {
     const promise = new Promise((resolve, reject) => {
       this.authService.loginService(conValue).subscribe(
         (response) => {
-          console.log(response);
+          // console.log(response);
           resolve(response);
         },
         (error) => {
@@ -60,7 +59,6 @@ export class LoginComponent implements OnInit {
     });
     return promise;
   }
-
   checkPhoneNumber(control: FormControl): { [s: string]: boolean } {
     let inputtxt: string = control.value;
     if (this.authService.phonenumber(control.value) === false) {

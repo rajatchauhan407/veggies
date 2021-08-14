@@ -37,7 +37,7 @@ export class PricesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("Hello");
+    // console.log("Hello");
     this.route.url.subscribe(result => {
       // console.log(result[1]);
       if(result[0].path == 'admin'){
@@ -46,7 +46,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         console.log(this.isAdmin);
       }
     });
-    console.log(this.isAdmin);
+    // console.log(this.isAdmin);
     if(this.isAdmin){
       this.getAdminPrices();
     }else {
@@ -69,16 +69,18 @@ export class PricesComponent implements OnInit, OnDestroy {
   }
 
   getUserPrices(){
+   
     this.spinner = true;
     this.vegDataService.vegDataRes().then((response:any)=>{
-      console.log(response);
+      // console.log(response);
       this.vegData = response.response;
       this.userId = response.userId;
       this.spinner = false;
       this.authService.setUserId(this.userId);
-      console.log(this.userId);
+      // console.log(this.userId);
     }).catch(error=>{
       console.log(error);
+      this.spinner = false;
     });
   }
   editVege(vegId){

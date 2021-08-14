@@ -5,7 +5,7 @@
     <div><a routerLink="/">AFresh</a></div>
     <div fxFlex fxLayout="row"  fxLayoutAlign="end none" fxHide.xs *ngIf="!checkAdmin">
         <ul fxLayout="row" fxLayoutGap="10px" class="navigation-items">
-            <li *ngIf="isAuthenticated"><a routerLink="/">Vegetables</a></li>
+            <li *ngIf="isAuthenticated"><a routerLink="/home">Vegetables</a></li>
             <li *ngIf="!isAuthenticated"><a routerLink="/signup">Sign Up</a></li>
             <li *ngIf="!isAuthenticated"><a routerLink="/login">Sign In</a></li>
             <li *ngIf="isAuthenticated"><a routerLink="/orders">My Orders</a></li>

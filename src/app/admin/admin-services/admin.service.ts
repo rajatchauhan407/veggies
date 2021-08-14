@@ -128,7 +128,7 @@ autoAuthUser() {
     this.authService.token = null;
     this.authService.clearAuthData();
     clearTimeout(this.authService.tokenTimer);
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/login']);
   }
 /*********** Delete Veggies *******/
 deleteVeg(id){
