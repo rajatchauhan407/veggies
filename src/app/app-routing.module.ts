@@ -18,6 +18,7 @@ import { CheckDeliveryComponent } from './check-delivery/check-delivery.componen
 
 
 const routes: Routes = [
+  {path:'',component:HomeComponent},
   {path:'home',component:HomeComponent,canActivate:[AuthGuard]},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignUpComponent},
