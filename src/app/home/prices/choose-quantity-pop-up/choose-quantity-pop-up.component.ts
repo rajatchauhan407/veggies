@@ -1,5 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OtpLoginComponent } from 'src/app/auth/login/otp-login/otp-login.component';
 import { AuthService } from 'src/app/shared/services/auth-services';
@@ -16,9 +17,12 @@ export class ChooseQuantityPopUpComponent implements OnInit, OnDestroy {
   image:string;
   vegData:any;
   userId:string;
+  isAuth:boolean;
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
   public dialogRef: MatDialogRef<ChooseQuantityPopUpComponent>,
-  private vegDataService:VegDataService) { 
+  private vegDataService:VegDataService,
+  private authService:AuthService,
+  private router:Router) { 
     // this.image=this.data.vegImage;
     this.vegData= this.data.vegData;
     this.userId = this.data.userId;
@@ -46,8 +50,16 @@ export class ChooseQuantityPopUpComponent implements OnInit, OnDestroy {
     // console.log(bucketVeg);
     this.dialogRef.close();
   }
-
+  onLogin(){
+    this.router.navigate(['/login']);
+    this.dialogRef.close();
+  }
+  onLogout(){
+    this.router.navigate(['/signup']);
+    this.dialogRef.close();
+  }
   ngOnInit(): void {
+    this.isAuth = this.authService.isAuth;
   }
 
 }

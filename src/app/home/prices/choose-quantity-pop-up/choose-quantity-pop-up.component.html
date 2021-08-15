@@ -1,19 +1,34 @@
-    <form>
-      <div class="dialog-image">
-        <img mat-card-image [src]="image"> 
-      </div>   
-        <mat-form-field appearance="fill">
-            <mat-label>Choose Quantity</mat-label>
-            <mat-select [(ngModel)]="selectedQuantity" name="quant">
-              <mat-option *ngFor="let qnt of quantity" [value]="qnt">
-                {{qnt+' '}}<b>Kg</b>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-dialog-actions>
-            <button mat-raised-button color="primary" [mat-dialog-close]>Cancel</button>
-            <button mat-raised-button color="accent" (click)="addToBucket()">Add</button>
-          </mat-dialog-actions>
-    </form>
+    <section *ngIf="isAuth">
+      <form>
+        <div class="dialog-image">
+          <img mat-card-image [src]="image"> 
+        </div>   
+          <mat-form-field appearance="fill">
+              <mat-label>Choose Quantity</mat-label>
+              <mat-select [(ngModel)]="selectedQuantity" name="quant">
+                <mat-option *ngFor="let qnt of quantity" [value]="qnt">
+                  {{qnt+' '}}<b>Kg</b>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-dialog-actions>
+              <button mat-raised-button color="primary" [mat-dialog-close]>Cancel</button>
+              <button mat-raised-button color="accent" (click)="addToBucket()">Add</button>
+            </mat-dialog-actions>
+      </form>
+    </section>
+    <section *ngIf="!isAuth">
+      <mat-card>
+        <mat-card-title>
+          Click Login or SignUp
+        </mat-card-title>
+        <mat-dialog-action  fxLayout="row" fxLayoutAlign="space-between">
+          <button mat-raised-button color="primary" (click)= onLogin()>Login</button>
+          <button mat-raised-button color="accent" (click)= "onLogout()">SignUp</button>
+        </mat-dialog-action>
+
+      </mat-card>
+    </section>
+    
     
       

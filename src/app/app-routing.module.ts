@@ -15,13 +15,14 @@ import { DashBoardComponent } from './log/dash-board/dash-board.component';
 import { DashGuardGuard } from './log/dash-guard.guard';
 import { AdmGuard } from './admin/admin-services/adm.guard';
 import { CheckDeliveryComponent } from './check-delivery/check-delivery.component';
+import { LoginGuard } from './shared/services/login.guard';
 
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
+  {path:'',component:HomeComponent,canActivate:[LoginGuard]},
   {path:'home',component:HomeComponent,canActivate:[AuthGuard]},
-  {path:'login',component:LoginComponent},
-  {path:'signup',component:SignUpComponent},
+  {path:'login',component:LoginComponent,canActivate:[LoginGuard]},
+  {path:'signup',component:SignUpComponent,canActivate:[LoginGuard]},
   // {path:'learn',component:CheckCompoComponent},
   {path:'bucket',component:BucketComponent,canActivate:[AuthGuard]},
   {path:'orders',component:OrdersComponent,canActivate:[AuthGuard]},
@@ -37,6 +38,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers:[AuthGuard,AdmGuard]
+  providers:[AuthGuard,AdmGuard,LoginGuard]
 })
 export class AppRoutingModule { }
