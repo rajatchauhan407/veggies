@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { FlexFlowContext } from 'twilio/lib/rest/flexApi/v1/flexFlow';
 import { AuthService } from '../shared/services/auth-services';
 import { VegDataService } from '../shared/services/vegData.service';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {CheckDeliveryComponent} from '../check-delivery/check-delivery.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'install-bucket',
@@ -14,6 +16,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
   styleUrls: ['./bucket.component.css']
 })
 export class BucketComponent implements OnInit {
+  @ViewChild('proceedButton') proceedButton:MatButton; 
   subTotal;
   lengthPage=10;
   currentPage=1;
@@ -33,20 +36,33 @@ export class BucketComponent implements OnInit {
   }
   /********** Opening the dialog Box ********/
   openDialog():void
-  {
-     const dialogRef = this.dialog.open(ConfirmDialogComponent,{
-       width: "100%",
-       height: "auto",
-       data :{
-        vegData: this.vegData,
-        subTotal : this.subTotal,
-        userId : this.userId
-       }
-     }
-      );
+  {  
+     const dialogRef1 = this.dialog.open(CheckDeliveryComponent,{
+      width:"100%",
+      height:"auto",
+      data:{
 
-      dialogRef.afterClosed().subscribe(result => {
-          
+      }
+     });
+    
+      dialogRef1.afterClosed().subscribe(result => {
+        if(result==true){
+          const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+            width: "100%",
+            height: "auto",
+            data :{
+             vegData: this.vegData,
+             subTotal : this.subTotal,
+             userId : this.userId
+            }
+          }
+           );
+           
+        }else{
+          this.proceedButton.disabled = true;
+          return;
+        }
+ 
       });
   }
   /*****Changing Page through pagination */  
@@ -67,7 +83,7 @@ export class BucketComponent implements OnInit {
       this.vegData = result.response;
       this.lengthPage = result.bucketCount;
       this.subTotal = result.subTotal;
-      console.log(this.vegData);
+      // console.log(this.vegData);
     }).catch(error =>{
       console.log("something went wrong");
     });
@@ -78,7 +94,7 @@ export class BucketComponent implements OnInit {
     this.vegDataService.deleteFromBucket(id).subscribe((res)=>{
      this.getBucketData();
     },error =>{
-      console.log(error);
+      // console.log(error);
     })
   }
 }

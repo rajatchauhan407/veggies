@@ -18,6 +18,7 @@ export class CheckDeliveryComponent implements OnInit {
   distance:any;
   result:boolean = false;
   message:string='';
+  checkDel:boolean;
   constructor(private http:HttpClient) { 
     
   }
@@ -41,10 +42,10 @@ checkDelivery(){
     }).then((response)=>{
       this.result = true;
       this.data = response;
-      console.log(this.data.rows[0].elements[0].distance.text);
+      // console.log(this.data.rows[0].elements[0].distance.text);
       this.distance = this.data.rows[0].elements[0].distance.text;
       const str = this.distance.split(' ');
-      console.log(str[0]);
+      // console.log(str[0]);
       this.checkDistance(str[0]);
     });
   },error => console.log(error),{enableHighAccuracy:true});
@@ -52,8 +53,17 @@ checkDelivery(){
 checkDistance(distance){
   if(distance>5){
     this.message = "We are Sorry ! Service not available right now";
+    this.checkDel = false;
   }else if(distance<5){
     this.message = "We can provide services";
+    this.checkDel= true;
+  }
+}
+getCheckDel():boolean{
+  if(this.checkDel == true){
+    return true;
+  }else{
+    return false;
   }
 }
   // getElements(latitude,longitude){

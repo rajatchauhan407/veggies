@@ -14,7 +14,7 @@ export class LoginGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       const isAuth = this.authService.isAuth;
-      console.log(isAuth);
+      // console.log(isAuth);
       if(isAuth){
           this.router.navigate(['/home']);
       }

@@ -8,10 +8,10 @@ const URL = environment.Url;
 export class AuthInterceptor implements HttpInterceptor{
     constructor(private authService:AuthService){}
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log(req.url);
+        // console.log(req.url);
         const authToken=this.authService.getToken();
         if(req.url == (URL+"/prices") && !authToken){
-            console.log(req);
+            // console.log(req);
             return next.handle(req);
         }else{
             const authRequest = req.clone({
